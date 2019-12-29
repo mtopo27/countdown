@@ -15,8 +15,10 @@ body {
 
 .App-header {
   background-color: #222834;
-  height: 100vh!important;
-  max-height: 100vh!important;
+  /* height: 100vh!important; */
+  /* max-height: 100vh!important; */
+  min-height: 100vh;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
