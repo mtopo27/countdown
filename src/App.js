@@ -92,13 +92,6 @@ function App() {
 
       </CardGrid>
 
-      {/* <Measurement>
-        <span>Days Remaining</span>
-        <span>Days Elapsed</span>
-        <span>Percentage</span>
-      </Measurement> */}
-
-
       </header>
     </div>
   );
@@ -139,34 +132,6 @@ const CardGrid = styled.div`
   @media (max-width: 720px) {
     justify-content: center;
 }
-`
-
-const Measurement = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  width: fit-content;
-  grid-gap: 100px;
-  padding-bottom: 100px;
-  margin-top: 60px;
-  text-align: left;
-  font-size: 24px;
-  padding-left: 50px;
-  color: #ACB5BF;
-  animation: Rise 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
-
-  span {
-    cursor: pointer;
-    transition: all ease-in-out .3s;
-  }
-
-  span:hover {
-    color: white;
-  }
-
-  span:first-child {
-    font-weight: bold;
-    color: white;
-  }
 `
 
 export default App;
