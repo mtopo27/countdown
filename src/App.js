@@ -52,7 +52,7 @@ const percentDec = 100 - ((daysToDec/nextDecDate.diff(currDecDate, 'days'))*100)
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="appContent">
 
       <HeroText>
         <LifeCount>{daysOld}</LifeCount>
@@ -88,7 +88,6 @@ function App() {
           data = {daysToDec}
           label = "Days Remaining"
           width = {percentDec} />
-
 
       </CardGrid>
 

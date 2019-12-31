@@ -2,7 +2,6 @@ import React from "react"
 import styled from 'styled-components'
 import './card.css'
 
-
 const Card = props => (
   <CardContainer>
     <CardTitle>{props.title}</CardTitle>
@@ -26,6 +25,8 @@ const CardContainer = styled.div`
   display: grid;
   grid-template-rows: repeat(4, auto);
   grid-gap: 24px;
+  // position: absolute;
+  // animation: CardDeal 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 `
 
 const CardTitle = styled.span`
