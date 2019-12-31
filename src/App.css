@@ -13,17 +13,17 @@ body {
   flex-direction: column;
 }
 
-.App-header {
+.appContent{
   background-color: #222834;
   /* height: 100vh!important; */
   /* max-height: 100vh!important; */
   min-height: 100vh;
-  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   color: white;
   overflow: none;
+  text-align: center;
 }
 
 
@@ -36,5 +36,21 @@ body {
   100% {
     opacity: 1;
     transform: TranslateY(0px)
+  }
+}
+
+@keyframes CardDeal {
+  0% {
+    position: absolute;
+  }
+
+  100% {
+    position: relative;
+  }
+}
+
+@media (max-width: 720px) {
+  .App-header {
+    padding-bottom: 50px;
   }
 }
