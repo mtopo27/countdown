@@ -12,7 +12,7 @@ import FortyK from './images/40k.svg'
 console.log(moment().format("ddd, MMMM"))
 
 // Define Birthday
-const birthday = [1995, 5, 24]
+const birthday = "1995-06-24"
 
 const now = moment()
 // Get Birthday
@@ -51,8 +51,7 @@ const percentDec = 100 - ((daysToDec/nextDecDate.diff(currDecDate, 'days'))*100)
 
 function App() {
   return (
-    <div className="App">
-      <header className="appContent">
+    <div className="appContent">
 
       <HeroText>
         <LifeCount>{daysOld}</LifeCount>
@@ -62,36 +61,35 @@ function App() {
       <CardGrid>
 
         <Card
-          title = {`${nextBday.diff(born, 'years')}th Birthday`}
-          image = {require('./images/birthday.svg')}
-          data = {daysToBday}
-          label = "Days Remaining"
-          width = {percentBday} />
+          title={`${nextBday.diff(born, 'years')}th Birthday`}
+          image={require('./images/birthday.svg')}
+          data={daysToBday}
+          label="Days Remaining"
+          width={percentBday} />
 
         <Card
-          title = "2020 New Year"
-          image = {require('./images/newYear.svg')}
-          data = {daysToYear}
-          label = "Days Remaining"
-          width = {percentYear} />
+          title="2020 New Year"
+          image={require('./images/newYear.svg')}
+          data={daysToYear}
+          label="Days Remaining"
+          width={percentYear} />
 
         <Card
-          title = {`${nextBigDay/1000}k Days`}
-          image = {decImage}
-          data = {daysToBigDay}
-          label = "Days Remaining"
-          width = {percentDays} />
+          title={`${nextBigDay/1000}k Days`}
+          image={decImage}
+          data={daysToBigDay}
+          label="Days Remaining"
+          width={percentDays} />
 
         <Card
-          title = {`${currDec}'s to ${nextDec}`}
-          image = {require('./images/death.svg')}
-          data = {daysToDec}
-          label = "Days Remaining"
-          width = {percentDec} />
+          title={`${currDec}'s to ${nextDec}`}
+          image={require('./images/death.svg')}
+          data={daysToDec}
+          label="Days Remaining"
+          width={percentDec} />
 
       </CardGrid>
 
-      </header>
     </div>
   );
 }
@@ -114,7 +112,6 @@ const LifeCount = styled.span`
 const LifeLabel = styled.span`
   font-size: 2rem;
   color: rgba(255, 255, 255, .8);
-
 `
 
 const CardGrid = styled.div`
