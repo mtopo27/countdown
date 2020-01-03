@@ -11,8 +11,12 @@ import FortyK from './images/40k.svg'
 
 console.log(moment().format("ddd, MMMM"))
 
+const birthdayInput = prompt("Enter your birthday as 'YYYY-MM-DD'", "1995-06-24")
+
+// console.log(birthdayPrompt())
+
 // Define Birthday
-const birthday = "1995-06-24"
+const birthday = birthdayInput
 
 const now = moment()
 // Get Birthday
@@ -48,6 +52,7 @@ const nextDecDate = moment(birthday).add(nextDec, 'years')
 const daysToDec = nextDecDate.diff(now, 'days')
 const percentDec = 100 - ((daysToDec/nextDecDate.diff(currDecDate, 'days'))*100)
 
+console.log(moment().add(1, 'years').format("YYYY"))
 
 function App() {
   return (
@@ -68,7 +73,7 @@ function App() {
           width={percentBday} />
 
         <Card
-          title="2020 New Year"
+          title={`${moment().add(1, 'years').format("YYYY")} New Year`}
           image={require('./images/newYear.svg')}
           data={daysToYear}
           label="Days Remaining"
@@ -122,6 +127,7 @@ const CardGrid = styled.div`
   padding-right: 50px;
   justify-content: space-between;
   transition: all ease-in-out .3s;
+  position-relative
   opacity: 0;
   animation: Rise 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 

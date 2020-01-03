@@ -2,6 +2,13 @@ import React from "react"
 import styled from 'styled-components'
 import './card.css'
 
+// Add prop types, particularly for the image because lone wolfs die. In javascript, you absolutely need to define and document
+/**ß
+ * @param {{
+ *  image: require
+ *  title: string
+ * }} props 
+ */
 const Card = props => (
   <CardContainer>
     <CardTitle>{props.title}</CardTitle>
@@ -70,5 +77,7 @@ const BarGraph = styled.div`
     animation: Grow 3s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 `
+
+
 
 export default Card
