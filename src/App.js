@@ -11,9 +11,7 @@ import FortyK from './images/40k.svg'
 
 console.log(moment().format("ddd, MMMM"))
 
-const birthdayInput = prompt("Enter your birthday as 'YYYY-MM-DD'", "1995-06-24")
-
-// console.log(birthdayPrompt())
+const birthdayInput = prompt("Enter your birthday as 'YYYY-MM-DD'", "YYYY-MM-DD")
 
 // Define Birthday
 const birthday = birthdayInput
@@ -41,8 +39,7 @@ const nextBigDay = (daysOld<10000) ? 10000 : (daysOld>10000 && daysOld<20000 ? 2
 const bigDayDate = moment(birthday).add(nextBigDay, 'days')
 const daysToBigDay = bigDayDate.diff(now, 'days')
 const percentDays = 100 - ((daysToBigDay/nextBigDay)*100)
-const decImage = (nextBigDay === 10000 ? TenK : (nextBigDay === 20000 ? TwentyK : (nextBday === 25000 ? Two5K : FortyK)))
-console.log(decImage)
+const decImage = (nextBigDay === 10000 ? TenK : (nextBigDay === 20000 ? TwentyK : (nextBigDay === 25000 ? Two5K : FortyK)))
 
 // Get current and next decade, date you turn the decade, days to the decade, percent of the decade
 const currDec = (Math.floor(age/10 % 10)) * 10
@@ -51,8 +48,6 @@ const currDecDate = moment(birthday).add(currDec, 'years')
 const nextDecDate = moment(birthday).add(nextDec, 'years')
 const daysToDec = nextDecDate.diff(now, 'days')
 const percentDec = 100 - ((daysToDec/nextDecDate.diff(currDecDate, 'days'))*100)
-
-console.log(moment().add(1, 'years').format("YYYY"))
 
 function App() {
   return (
