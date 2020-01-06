@@ -46,29 +46,36 @@ export const totalYear = nextYear.diff(thisYear, 'days')
 export const percentYear = percenting(daysToYear, totalYear)
 
 // Get number of days old, the next big date marker coming up, the date of the big day, the days until that date, and the percent of the way there
-export const daysOld = (bday) => now.diff(moment(bday), 'days')
-export const nextBigDay = 
-    (daysOld<10000) ? 10000 : 
+export const daysOldData = function(userBday) {
+  var daysOld = moment().diff(moment(userBday), 'days');
+  var nextBigDay = 
+  (daysOld<10000) ? 10000 : 
     (daysOld>10000 && daysOld<20000 ? 20000 : 
       (daysOld>20000 && daysOld<25000 ? 25000 : 
         (daysOld>25000 && daysOld<40000 ? 40000 : "wow, good job")
       )
-    )
-export const bigDayDate = moment(birthday).add(nextBigDay, 'days')
-export const daysToBigDay = bigDayDate.diff(now, 'days')
-export const percentDays = percenting(daysToBigDay, nextBigDay)
-export const decImage = (
-  nextBigDay === 10000 ? TenK : 
-    (nextBigDay === 20000 ? TwentyK : 
-      (nextBigDay === 25000 ? Two5K : FortyK)
-    )
-  )
+  );
+  var bigDayDate = moment(userBday).add(nextBigDay, 'days');
+  var daysToBigDay = bigDayDate.diff(moment(), 'days');
+  var percentDays = percenting(daysToBigDay, nextBigDay);
+  var decImage = (
+    nextBigDay === 10000 ? TenK : 
+      (nextBigDay === 20000 ? TwentyK : 
+        (nextBigDay === 25000 ? Two5K : FortyK)
+      )
+    );
+  return [nextBigDay, decImage, daysToBigDay, percentDays]
+}
+
 
 // Get current and next decade, date you turn the decade, days to the decade, percent of the decade
-export const currDec = (Math.floor(24/10 % 10)) * 10
-export const nextDec = currDec+10
-export const currDecDate = moment(birthday).add(currDec, 'years')
-export const nextDecDate = moment(birthday).add(nextDec, 'years')
-export const daysToDec = nextDecDate.diff(now, 'days')
-export const totalDec = nextDecDate.diff(currDecDate, 'days')
-export const percentDec = percenting(daysToDec, totalDec)
+export const decData = function(userAge, userBday) {
+  var currDec = (Math.floor(userAge/10 % 10)) * 10;
+  var nextDec = currDec + 10;
+  var currDecDate = moment(userBday).add(currDec, 'years');
+  var nextDecDate = moment(userBday).add(nextDec, 'years');
+  var daysToDec = nextDecDate.diff(moment(), 'days');
+  var totalDec = nextDecDate.diff(currDecDate, 'days');
+  var percentDec = percenting(daysToDec, totalDec);
+  return [currDec, nextDec, daysToDec, percentDec]
+}
