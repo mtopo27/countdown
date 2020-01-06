@@ -9,25 +9,38 @@ console.log(moment().format("ddd, MMMM"))
 
 // export const birthdayInput = prompt("Enter your birthday as 'YYYY-MM-DD'", "YYYY-MM-DD")
 
-// Define Birthday
+// Birthday and born are needed in order to keep a moment variable that isn't mutated. When .add or .subtract, use moment(birthday). When using diff you can just use born
 const birthday = "1995-06-24"
-
-console.log(birthday)
 export const now = moment()
-// Get Birthday
 export const born = moment(birthday)
 
 function percenting(a, b) {
   return 100 - ((a/b) * 100)
 }
 
+export const testerFunction = function(numX) {
+  var first = 3 - numX;
+  var second = 3 + numX;
+  return [first, second]
+}
+
+
 // Get the age, date of last and next birthday, days to next birthday, and % of year age finished
-export const age = Math.floor(now.diff(born, 'years', true))
-export const lastBday = (bday) => moment(bday).add(age, 'years')
-export const nextBday = moment(birthday).add(age + 1, 'years')
-export const daysToBday = nextBday.diff(now, 'days')
-export const totalBday = nextBday.diff(lastBday, 'days')
-export const percentBday = percenting(daysToBday, totalBday)
+export const age = (userborn) => Math.floor(now.diff(userborn, 'years', true))
+export const lastBday = (bday, userAge) => moment(bday).add(userAge, 'years')
+export const nextBday = (bday, userAge) => moment(bday).add(userAge + 1, 'years')
+export const daysToBday = (userNextBday) => userNextBday.diff(now, 'days')
+export const totalBday = (userNextBday, userLastBday) => userNextBday.diff(userLastBday, 'days')
+export const percentBday = (userDaysToBday, userTotalBday) => percenting(userDaysToBday, userTotalBday)
+
+export const bDayData = function(userBorn, userBday) {
+  var currAge = Math.floor(moment().diff(userBorn, 'years', true));
+  var prevBday = moment(userBday).add(currAge, 'years', true);
+  var nextBday = moment(userBday).add(currAge + 1, 'years', true)
+  return [currAge, prevBday, nextBday]
+}
+const [currAge, prevBday] = bDayData(moment("1995-06-24"), "1995-06-24")
+console.log(currAge)
 
 // Get jan 1 date of respective years, days from 'now' to next year, and the percent of the year finished
 export const thisYear = moment().startOf('year')

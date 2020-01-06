@@ -44,8 +44,14 @@ class App extends React.Component {
   */
 
   render() {
-    console.log(this.state.dateInput)
-    console.log(this.state)
+    // Constants from states, logic functions held in util
+    const userBday = this.state.dateInput
+    const userBorn = moment(userBday)
+    const userAges = Math.floor(util.now.diff(userBorn, 'years', true))
+
+    const [first, second] = util.testerFunction(2)
+    console.log(first)
+    console.log(second)
 
     if (!this.state.hasDate) {
       return (
@@ -62,20 +68,8 @@ class App extends React.Component {
       )
     }
 
-    // if (this.state.hasDate === false) {
     return (
       <div className="appContent">
-      {/* {(!this.state.hasDate) ?
-          <TestInput>
-          <input 
-            type="text" 
-            onChange={this.handleChange} >
-          </input>
-          <button onClick={this.handleClick}>Store Date</button>
-          {this.state.dateInput === "hello" ? <span>yo</span> : <span>nope</span>}
-          </TestInput>
-      : */}
-      {/* <> */}
         <HeroText>
           <LifeCount>{util.daysOld(this.state.dateInput)}</LifeCount>
           <LifeLabel>Days Old</LifeLabel>
@@ -83,11 +77,11 @@ class App extends React.Component {
   
         <CardGrid>
           <Card
-            title={`${util.nextBday.diff(util.born, 'years')}th Birthday`}
+            title={`${userAges + 1}th Birthday`}
             image={require('./images/birthday.svg')}
-            data={util.daysToBday}
+            data={util.daysToBday(util.nextBday(userBday, userAges))}
             label="Days Remaining"
-            width={util.percentBday} />
+            width={util.percentBday()} />
 
           <Card
             title={`${moment().add(1, 'years').format("YYYY")} New Year`}
