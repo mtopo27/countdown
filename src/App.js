@@ -49,9 +49,7 @@ class App extends React.Component {
     const userBorn = moment(userBday)
     const userAges = Math.floor(util.now.diff(userBorn, 'years', true))
 
-    const [first, second] = util.testerFunction(2)
-    console.log(first)
-    console.log(second)
+    const [daysToBday, percentBday] = util.bDayData(userBorn, userBday)
 
     if (!this.state.hasDate) {
       return (
@@ -79,9 +77,9 @@ class App extends React.Component {
           <Card
             title={`${userAges + 1}th Birthday`}
             image={require('./images/birthday.svg')}
-            data={util.daysToBday(util.nextBday(userBday, userAges))}
+            data={daysToBday}
             label="Days Remaining"
-            width={util.percentBday()} />
+            width={percentBday} />
 
           <Card
             title={`${moment().add(1, 'years').format("YYYY")} New Year`}

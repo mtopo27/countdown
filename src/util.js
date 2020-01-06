@@ -26,21 +26,17 @@ export const testerFunction = function(numX) {
 
 
 // Get the age, date of last and next birthday, days to next birthday, and % of year age finished
-export const age = (userborn) => Math.floor(now.diff(userborn, 'years', true))
-export const lastBday = (bday, userAge) => moment(bday).add(userAge, 'years')
-export const nextBday = (bday, userAge) => moment(bday).add(userAge + 1, 'years')
-export const daysToBday = (userNextBday) => userNextBday.diff(now, 'days')
-export const totalBday = (userNextBday, userLastBday) => userNextBday.diff(userLastBday, 'days')
-export const percentBday = (userDaysToBday, userTotalBday) => percenting(userDaysToBday, userTotalBday)
 
 export const bDayData = function(userBorn, userBday) {
   var currAge = Math.floor(moment().diff(userBorn, 'years', true));
   var prevBday = moment(userBday).add(currAge, 'years', true);
-  var nextBday = moment(userBday).add(currAge + 1, 'years', true)
-  return [currAge, prevBday, nextBday]
+  var nextBday = moment(userBday).add(currAge + 1, 'years', true);
+  var daysToBday = nextBday.diff(moment(), 'days');
+  var totalBday = nextBday.diff(prevBday, 'days');
+  var percentBday = percenting(daysToBday, totalBday)
+  return [daysToBday, percentBday]
 }
 const [currAge, prevBday] = bDayData(moment("1995-06-24"), "1995-06-24")
-console.log(currAge)
 
 // Get jan 1 date of respective years, days from 'now' to next year, and the percent of the year finished
 export const thisYear = moment().startOf('year')
@@ -69,7 +65,7 @@ export const decImage = (
   )
 
 // Get current and next decade, date you turn the decade, days to the decade, percent of the decade
-export const currDec = (Math.floor(age/10 % 10)) * 10
+export const currDec = (Math.floor(24/10 % 10)) * 10
 export const nextDec = currDec+10
 export const currDecDate = moment(birthday).add(currDec, 'years')
 export const nextDecDate = moment(birthday).add(nextDec, 'years')
