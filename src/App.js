@@ -20,67 +20,73 @@ class App extends React.Component {
     this.setState({hasDate: true});
   }
 
+  /*
+    Questions:
+    1. If nothing outside of this class can see the value of {this.state.dateInput}, how can I use the inputted value in my util file or do I need to put all my date logic that takes the input value inside this class
+    2. how do I ensure something follows a format '####-##-##'
+    3. Any idea why the styled components don't render after state change
+    ---
+    4. Animating between returns? 
+  */
+
   render() {
     console.log(this.state.dateInput)
     console.log(this.state)
     console.log(this.state.hasDate)
-    if (this.state.hasDate === false) {
+    // if (this.state.hasDate === false) {
     return (
-      <TestInput>
-      <input 
-        type="text" 
-        onChange={this.handleChange} >
-      </input>
-      <button onClick={this.handleClick}>Store Date</button>
-      {this.state.dateInput === "hello" ? <span>yo</span> : <span>nope</span>}
-      </TestInput>
-    )
-    } else {
-
-    return (
-    <div className="appContent">
-
-      <HeroText>
-        <LifeCount>{util.daysOld}</LifeCount>
-        <LifeLabel>Days Old</LifeLabel>
-      </HeroText>
-
-      <CardGrid>
-
-        <Card
-          title={`${util.nextBday.diff(util.born, 'years')}th Birthday`}
-          image={require('./images/birthday.svg')}
-          data={util.daysToBday}
-          label="Days Remaining"
-          width={util.percentBday} />
-
-        <Card
-          title={`${moment().add(1, 'years').format("YYYY")} New Year`}
-          image={require('./images/newYear.svg')}
-          data={util.daysToYear}
-          label="Days Remaining"
-          width={util.percentYear} />
-
-        <Card
-          title={`${util.nextBigDay/1000}k Days`}
-          image={util.decImage}
-          data={util.daysToBigDay}
-          label="Days Remaining"
-          width={util.percentDays} />
-
-        <Card
-          title={`${util.currDec}'s to ${util.nextDec}`}
-          image={require('./images/death.svg')}
-          data={util.daysToDec}
-          label="Days Remaining"
-          width={util.percentDec} />
-
-      </CardGrid>
-    </div>
+      <div className="appContent">
+      {(this.state.hasDate === false) ?
+          <TestInput>
+          <input 
+            type="text" 
+            onChange={this.handleChange} >
+          </input>
+          <button onClick={this.handleClick}>Store Date</button>
+          {this.state.dateInput === "hello" ? <span>yo</span> : <span>nope</span>}
+          </TestInput>
+      :
+      <>
+        <HeroText>
+          <LifeCount>{util.daysOld}</LifeCount>
+          <LifeLabel>Days Old</LifeLabel>
+        </HeroText>
+  
+        <CardGrid>
+  
+          <Card
+            title={`${util.nextBday.diff(util.born, 'years')}th Birthday`}
+            image={require('./images/birthday.svg')}
+            data={util.daysToBday}
+            label="Days Remaining"
+            width={util.percentBday} />
+  
+          <Card
+            title={`${moment().add(1, 'years').format("YYYY")} New Year`}
+            image={require('./images/newYear.svg')}
+            data={util.daysToYear}
+            label="Days Remaining"
+            width={util.percentYear} />
+  
+          <Card
+            title={`${util.nextBigDay/1000}k Days`}
+            image={util.decImage}
+            data={util.daysToBigDay}
+            label="Days Remaining"
+            width={util.percentDays} />
+  
+          <Card
+            title={`${util.currDec}'s to ${util.nextDec}`}
+            image={require('./images/death.svg')}
+            data={util.daysToDec}
+            label="Days Remaining"
+            width={util.percentDec} />
+  
+        </CardGrid></>}
+      </div>
   );
     }
     }
-}
 
 
 const HeroText = styled.div`
@@ -131,6 +137,7 @@ const TestInput = styled.div`
 
   button {
     background-color: rgba(0, 0, 0, .1);
+    color: white;
   }
 `
 
