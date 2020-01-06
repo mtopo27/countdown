@@ -5,6 +5,8 @@ import Card from './components/card';
 import moment from 'moment'
 import * as util from './util'
 
+
+
 class App extends React.Component {
   state = {
     dateInput: '',
@@ -16,8 +18,20 @@ class App extends React.Component {
     this.setState({dateInput: event.target.value});
   }
 
+  // handleChange = (event) => {
+  //   this.setState((state) => {
+  //     return {dateInput: event.target.value}
+  //   })
+  // }
+
   handleClick = (event) => {
     this.setState({hasDate: true});
+  }
+
+  handleClick = (event) => {
+    this.setState((state) => {
+      return {hasDate: true};
+    })
   }
 
   /*
@@ -32,11 +46,26 @@ class App extends React.Component {
   render() {
     console.log(this.state.dateInput)
     console.log(this.state)
-    console.log(this.state.hasDate)
+
+    if (!this.state.hasDate) {
+      return (
+        <div className="appContent">
+        <TestInput>
+        <input 
+          type="text" 
+          onChange={this.handleChange} >
+        </input>
+        <button onClick={this.handleClick}>Store Date</button>
+        {this.state.dateInput === "hello" ? <span>yo</span> : <span>nope</span>}
+        </TestInput>
+        </div>
+      )
+    }
+
     // if (this.state.hasDate === false) {
     return (
       <div className="appContent">
-      {(this.state.hasDate === false) ?
+      {/* {(!this.state.hasDate) ?
           <TestInput>
           <input 
             type="text" 
@@ -45,22 +74,21 @@ class App extends React.Component {
           <button onClick={this.handleClick}>Store Date</button>
           {this.state.dateInput === "hello" ? <span>yo</span> : <span>nope</span>}
           </TestInput>
-      :
-      <>
+      : */}
+      {/* <> */}
         <HeroText>
-          <LifeCount>{util.daysOld}</LifeCount>
+          <LifeCount>{util.daysOld(this.state.dateInput)}</LifeCount>
           <LifeLabel>Days Old</LifeLabel>
         </HeroText>
   
         <CardGrid>
-  
           <Card
             title={`${util.nextBday.diff(util.born, 'years')}th Birthday`}
             image={require('./images/birthday.svg')}
             data={util.daysToBday}
             label="Days Remaining"
             width={util.percentBday} />
-  
+
           <Card
             title={`${moment().add(1, 'years').format("YYYY")} New Year`}
             image={require('./images/newYear.svg')}
@@ -81,8 +109,8 @@ class App extends React.Component {
             data={util.daysToDec}
             label="Days Remaining"
             width={util.percentDec} />
-  
-        </CardGrid></>}
+        </CardGrid>
+        {/* </CardGrid></>} */}
       </div>
   );
     }

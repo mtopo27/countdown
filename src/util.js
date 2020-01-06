@@ -3,14 +3,16 @@ import TenK from './images/10k.svg'
 import TwentyK from './images/20k.svg'
 import Two5K from './images/25k.svg'
 import FortyK from './images/40k.svg'
+import * as app from './App'
 
 console.log(moment().format("ddd, MMMM"))
 
 // export const birthdayInput = prompt("Enter your birthday as 'YYYY-MM-DD'", "YYYY-MM-DD")
 
 // Define Birthday
-export const birthday = "1995-06-24"
+const birthday = "1995-06-24"
 
+console.log(birthday)
 export const now = moment()
 // Get Birthday
 export const born = moment(birthday)
@@ -21,7 +23,7 @@ function percenting(a, b) {
 
 // Get the age, date of last and next birthday, days to next birthday, and % of year age finished
 export const age = Math.floor(now.diff(born, 'years', true))
-export const lastBday = moment(birthday).add(age, 'years')
+export const lastBday = (bday) => moment(bday).add(age, 'years')
 export const nextBday = moment(birthday).add(age + 1, 'years')
 export const daysToBday = nextBday.diff(now, 'days')
 export const totalBday = nextBday.diff(lastBday, 'days')
@@ -35,7 +37,7 @@ export const totalYear = nextYear.diff(thisYear, 'days')
 export const percentYear = percenting(daysToYear, totalYear)
 
 // Get number of days old, the next big date marker coming up, the date of the big day, the days until that date, and the percent of the way there
-export const daysOld = now.diff(moment(birthday), 'days')
+export const daysOld = (bday) => now.diff(moment(bday), 'days')
 export const nextBigDay = 
     (daysOld<10000) ? 10000 : 
     (daysOld>10000 && daysOld<20000 ? 20000 : 
