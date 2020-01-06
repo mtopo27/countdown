@@ -7,7 +7,8 @@ import * as util from './util'
 
 class App extends React.Component {
   state = {
-    dateInput: ''
+    dateInput: '',
+    hasDate: false
   }
 
 
@@ -16,14 +17,14 @@ class App extends React.Component {
   }
 
   handleClick = (event) => {
-    let newBday = this.state.dateInput;
-    console.log(newBday)
+    this.setState({hasDate: true});
   }
 
   render() {
     console.log(this.state.dateInput)
     console.log(this.state)
-    if (this.state.dateInput != "hello") {
+    console.log(this.state.hasDate)
+    if (this.state.hasDate === false) {
     return (
       <TestInput>
       <input 
