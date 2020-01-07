@@ -5,7 +5,13 @@ import Card from './components/card';
 import moment from 'moment'
 import * as util from './util'
 
-
+  /*
+    Questions:
+    2. how do I ensure something follows a format '####-##-##'
+    3. Any idea why the styled components don't render after state change
+    ---
+    4. Animating between returns? 
+  */
 
 class App extends React.Component {
   state = {
@@ -18,30 +24,10 @@ class App extends React.Component {
     this.setState({dateInput: event.target.value});
   }
 
-  // handleChange = (event) => {
-  //   this.setState((state) => {
-  //     return {dateInput: event.target.value}
-  //   })
-  // }
 
   handleClick = (event) => {
     this.setState({hasDate: true});
   }
-
-  handleClick = (event) => {
-    this.setState((state) => {
-      return {hasDate: true};
-    })
-  }
-
-  /*
-    Questions:
-    1. If nothing outside of this class can see the value of {this.state.dateInput}, how can I use the inputted value in my util file or do I need to put all my date logic that takes the input value inside this class
-    2. how do I ensure something follows a format '####-##-##'
-    3. Any idea why the styled components don't render after state change
-    ---
-    4. Animating between returns? 
-  */
 
   render() {
     // Constants from states, logic functions held in util
@@ -53,60 +39,66 @@ class App extends React.Component {
     const [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
     const [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
 
-    if (!this.state.hasDate) {
+
+    let {pageStatus} = this.state.hasDate
+
+    const inputPage = (
+      <div className="appContent">
+      <TestInput>
+      <input 
+        type="date" 
+        onChange={this.handleChange} >
+      </input>
+      <button onClick={this.handleClick}>Store Date</button>
+      </TestInput>
+      </div>
+    )
+
+    const mainPage = (
+      <div className="appContent">
+      <HeroText>
+        <LifeCount>{userDaysOld}</LifeCount>
+        <LifeLabel>Days Old</LifeLabel>
+      </HeroText>
+
+      <CardGrid>
+        <Card
+          title={`${userAges + 1}th Birthday`}
+          image={require('./images/birthday.svg')}
+          data={daysToBday}
+          label="Days Remaining"
+          width={percentBday} />
+
+        <Card
+          title={`${moment().add(1, 'years').format("YYYY")} New Year`}
+          image={require('./images/newYear.svg')}
+          data={util.daysToYear}
+          label="Days Remaining"
+          width={util.percentYear} />
+
+        <Card
+          title={`${nextBigDay/1000}k Days`}
+          image={decImage}
+          data={daysToBigDay}
+          label="Days Remaining"
+          width={percentDays} />
+
+        <Card
+          title={`${currDec}'s to ${nextDec}`}
+          image={require('./images/death.svg')}
+          data={daysToDec}
+          label="Days Remaining"
+          width={percentDec} />
+      </CardGrid>
+    </div>
+    )
+
+
       return (
-        <div className="appContent">
-        <TestInput>
-        <input 
-          type="text" 
-          onChange={this.handleChange} >
-        </input>
-        <button onClick={this.handleClick}>Store Date</button>
-        {this.state.dateInput === "hello" ? <span>yo</span> : <span>nope</span>}
-        </TestInput>
-        </div>
+         <div> {this.state.hasDate ? inputPage : mainPage} </div>
       )
     }
 
-    return (
-      <div className="appContent">
-        <HeroText>
-          <LifeCount>{userDaysOld}</LifeCount>
-          <LifeLabel>Days Old</LifeLabel>
-        </HeroText>
-  
-        <CardGrid>
-          <Card
-            title={`${userAges + 1}th Birthday`}
-            image={require('./images/birthday.svg')}
-            data={daysToBday}
-            label="Days Remaining"
-            width={percentBday} />
-
-          <Card
-            title={`${moment().add(1, 'years').format("YYYY")} New Year`}
-            image={require('./images/newYear.svg')}
-            data={util.daysToYear}
-            label="Days Remaining"
-            width={util.percentYear} />
-  
-          <Card
-            title={`${nextBigDay/1000}k Days`}
-            image={decImage}
-            data={daysToBigDay}
-            label="Days Remaining"
-            width={percentDays} />
-  
-          <Card
-            title={`${currDec}'s to ${nextDec}`}
-            image={require('./images/death.svg')}
-            data={daysToDec}
-            label="Days Remaining"
-            width={percentDec} />
-        </CardGrid>
-      </div>
-  );
-    }
     }
 
 
