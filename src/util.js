@@ -11,20 +11,19 @@ function percenting(a, b) {
   return 100 - ((a/b) * 100)
 }
 
-
-// Get the age, date of last and next birthday, days to next birthday, and % of year age finished
-
+// 
 export const bDayData = function(userBorn, userBday) {
   var currAge = Math.floor(moment().diff(userBorn, 'years', true));
   var prevBday = moment(userBday).add(currAge, 'years', true);
   var nextBday = moment(userBday).add(currAge + 1, 'years', true);
   var daysToBday = nextBday.diff(moment(), 'days');
   var totalBday = nextBday.diff(prevBday, 'days');
-  var percentBday = percenting(daysToBday, totalBday)
+  // var percentBday = percenting(daysToBday, totalBday)
+  var percentBday = 100 - ((daysToBday/totalBday) * 100)
   return [daysToBday, percentBday]
 }
-const [currAge, prevBday] = bDayData(moment("1995-06-24"), "1995-06-24")
-
+const [currAge, percentBday] = bDayData(moment("1995-06-24"), "1995-06-24")
+console.log(percentBday)
 // Get jan 1 date of respective years, days from 'now' to next year, and the percent of the year finished
 export const thisYear = moment().startOf('year')
 export const nextYear = moment().startOf('year').add(1, 'years')

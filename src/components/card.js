@@ -17,7 +17,7 @@ const Card = props => (
       <CardData>{props.data}</CardData>
       <DataLabel>{props.label}</DataLabel>
     </div>
-    <BarGraph width={props.width}>
+    <BarGraph barWidth={props.barWidth}>
       <div />
     </BarGraph>
   </CardContainer>
@@ -71,7 +71,7 @@ const BarGraph = styled.div`
   div {
     position: absolute;
     background-color: #0578F2;
-    width: ${(props) => props.width}%;
+    width: ${(props) => props.barWidth}%;
     height: 8px;
     border-radius: 20px;
     animation: Grow 3s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);

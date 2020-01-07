@@ -26,6 +26,10 @@ body {
   text-align: center;
 }
 
+.fixer {
+  display: none;
+}
+
 
 @keyframes Rise {
   0% {
