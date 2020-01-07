@@ -29,16 +29,18 @@ class App extends React.Component {
     this.setState({hasDate: true});
   }
 
+  
+
   render() {
     // Constants from states, logic functions held in util
     const userBday = this.state.dateInput
     const userBorn = moment(userBday)
     const userAges = Math.floor(util.now.diff(userBorn, 'years', true))
     const userDaysOld = util.now.diff(moment(userBday), 'days')
-    const [daysToBday, percentBday] = util.bDayData(userBorn, userBday)
+    const [daysToBday, percentBday] = this.state.hasDate ? util.bDayData(userBorn, userBday) : "0"
     const [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
     const [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
-
+    
     const inputPage = (
       <div className="appContent">
       <TestInput>
@@ -50,47 +52,7 @@ class App extends React.Component {
       </TestInput>
       </div>
     )
-
-    // const mainPage = (
-    //   <div className="appContent">
-    //   <HeroText>
-    //     <LifeCount>{userDaysOld}</LifeCount>
-    //     <LifeLabel>Days Old</LifeLabel>
-    //   </HeroText>
-
-    //   <CardGrid>
-    //     <Card
-    //       title={`${userAges + 1}th Birthday`}
-    //       image={require('./images/birthday.svg')}
-    //       data={daysToBday}
-    //       label="Days Remaining"
-    //       barWidth={percentBday} />
-
-    //     <Card
-    //       title={`${moment().add(1, 'years').format("YYYY")} New Year`}
-    //       image={require('./images/newYear.svg')}
-    //       data={util.daysToYear}
-    //       label="Days Remaining"
-    //       barWidth={util.percentYear} />
-
-    //     <Card
-    //       title={`${nextBigDay/1000}k Days`}
-    //       image={decImage}
-    //       data={daysToBigDay}
-    //       label="Days Remaining"
-    //       barWidth={percentDays} />
-
-    //     <Card
-    //       title={`${currDec}'s to ${nextDec}`}
-    //       image={require('./images/death.svg')}
-    //       data={daysToDec}
-    //       label="Days Remaining"
-    //       barWidth={percentDec} />
-    //   </CardGrid>
-    // </div>
-    // )
-
-
+      const active = this.state.hasDate
       return (
         <div className="appContent">
         
@@ -105,7 +67,7 @@ class App extends React.Component {
         </div>
 
         <div className={`${this.state.hasDate ? '' : 'fixer'}`}>
-      <HeroText>
+      <HeroText active>
         <LifeCount>{userDaysOld}</LifeCount>
         <LifeLabel>Days Old</LifeLabel>
       </HeroText>
@@ -116,7 +78,7 @@ class App extends React.Component {
           image={require('./images/birthday.svg')}
           data={daysToBday}
           label="Days Remaining"
-          barWidth={percentBday} />
+          barWidth={parseFloat(percentBday)} />
 
         <Card
           title={`${moment().add(1, 'years').format("YYYY")} New Year`}
@@ -137,7 +99,7 @@ class App extends React.Component {
           image={require('./images/death.svg')}
           data={daysToDec}
           label="Days Remaining"
-          barWidth={percentDec} />
+          barWidth={parseFloat(percentDec)} />
       </CardGrid></div>
       </div>
       )
@@ -145,9 +107,7 @@ class App extends React.Component {
 
     }
 
-
 const HeroText = styled.div`
-  display: flex;
   flex-direction: column;
   margin-bottom: 60px;
   padding-top: 100px;

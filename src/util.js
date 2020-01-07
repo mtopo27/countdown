@@ -65,3 +65,10 @@ export const decData = function(userAge, userBday) {
   var percentDec = percenting(daysToDec, totalDec);
   return [currDec, nextDec, daysToDec, percentDec]
 }
+
+export const tryData = function(me) {
+  const tryThis = me;
+  const tryThat = me + me;
+  return { tryThis }
+}
+
