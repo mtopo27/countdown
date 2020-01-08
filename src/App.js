@@ -39,16 +39,17 @@ class App extends React.Component {
 
       return (
         <div className="appContent">
+        <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
           {!this.state.hasDate ? 
             (<TestInput>
               <input 
-                type="text" 
+                type="date" 
                 onChange={this.handleChange}>
               </input>
               <button onClick={this.handleClick}>Store Date</button>
             </TestInput>) : ( <>
       <HeroText>
-        <LifeCount>{userDaysOld}</LifeCount>
+        <LifeCount>{this.state.hasDate ? userDaysOld : ""}</LifeCount>
         <LifeLabel>Days Old</LifeLabel>
       </HeroText>
     
@@ -58,29 +59,30 @@ class App extends React.Component {
             image={require('./images/birthday.svg')}
             data={daysToBday}
             label="Days Remaining"
-            width={percentBday} />
+            barWidth={percentBday} />
 
           <Card
             title={`${moment().add(1, 'years').format("YYYY")} New Year`}
             image={require('./images/newYear.svg')}
             data={util.daysToYear}
             label="Days Remaining"
-            width={util.percentYear} />
+            barWidth={util.percentYear} />
   
           <Card
             title={`${nextBigDay/1000}k Days`}
             image={decImage}
             data={daysToBigDay}
             label="Days Remaining"
-            width={percentDays} />
+            barWidth={percentDays} />
   
           <Card
             title={`${currDec}'s to ${nextDec}`}
             image={require('./images/death.svg')}
             data={daysToDec}
             label="Days Remaining"
-            width={percentDec} />
-        </CardGrid></>)
+            barWidth={percentDec} />
+        </CardGrid>
+        </>)
 
         }
         </div>

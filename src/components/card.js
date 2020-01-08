@@ -17,7 +17,7 @@ const Card = props => (
       <CardData>{props.data}</CardData>
       <DataLabel>{props.label}</DataLabel>
     </div>
-    <BarGraph width={props.width}>
+    <BarGraph barWidth={props.barWidth}>
       <div />
     </BarGraph>
   </CardContainer>
@@ -32,8 +32,6 @@ const CardContainer = styled.div`
   display: grid;
   grid-template-rows: repeat(4, auto);
   grid-gap: 24px;
-  // position: absolute;
-  // animation: CardDeal 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 `
 
 const CardTitle = styled.span`
@@ -71,7 +69,7 @@ const BarGraph = styled.div`
   div {
     position: absolute;
     background-color: #0578F2;
-    width: ${(props) => props.width}%;
+    width: ${(props) => props.barWidth || 0}%;
     height: 8px;
     border-radius: 20px;
     animation: Grow 3s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);

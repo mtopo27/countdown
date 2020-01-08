@@ -3,16 +3,13 @@ import TenK from './images/10k.svg'
 import TwentyK from './images/20k.svg'
 import Two5K from './images/25k.svg'
 import FortyK from './images/40k.svg'
-import * as app from './App'
 
 console.log(moment().format("ddd, MMMM"))
 
 // export const birthdayInput = prompt("Enter your birthday as 'YYYY-MM-DD'", "YYYY-MM-DD")
 
 // Birthday and born are needed in order to keep a moment variable that isn't mutated. When .add or .subtract, use moment(birthday). When using diff you can just use born
-const birthday = "1995-06-24"
 export const now = moment()
-export const born = moment(birthday)
 
 function percenting(a, b) {
   return 100 - ((a/b) * 100)
@@ -36,7 +33,6 @@ export const bDayData = function(userBorn, userBday) {
   var percentBday = percenting(daysToBday, totalBday)
   return [daysToBday, percentBday]
 }
-const [currAge, prevBday] = bDayData(moment("1995-06-24"), "1995-06-24")
 
 // Get jan 1 date of respective years, days from 'now' to next year, and the percent of the year finished
 export const thisYear = moment().startOf('year')
