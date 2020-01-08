@@ -40,20 +40,7 @@ class App extends React.Component {
     var [daysToBday, percentBday] = this.state.hasDate ? util.bDayData(userBorn, userBday) : "0"
     var [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
     var [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
-    var testerpercentage = percentDec
-console.log(testerpercentage)
-
-    const inputPage = (
-      <div className="appContent">
-      <TestInput>
-      <input 
-        type="date" 
-        onChange={this.handleChange} >
-      </input>
-      <button onClick={this.handleClick}>Store Date</button>
-      </TestInput>
-      </div>
-    )
+console.log(this.state.hasDate)
       return (
         <div className="appContent">
         
@@ -67,7 +54,7 @@ console.log(testerpercentage)
         </TestInput>
         </div>
 
-        <div className={`${this.state.hasDate ? '' : 'fixer'}`}>
+        <CSSFix showing={`${this.state.hasDate ? 1 : 0}`}>
       <HeroText>
         <LifeCount>{this.state.hasDate ? userDaysOld : ""}</LifeCount>
         <LifeLabel>Days Old</LifeLabel>
@@ -93,7 +80,7 @@ console.log(testerpercentage)
           image={decImage}
           data={daysToBigDay}
           label="Days Remaining"
-          barWidth={`${testerpercentage}`} />
+          barWidth={`${percentDays}`} />
 
         <Card
           title={`${currDec}'s to ${nextDec}`}
@@ -101,7 +88,7 @@ console.log(testerpercentage)
           data={daysToDec}
           label="Days Remaining"
           barWidth={parseFloat(percentDec)} />
-      </CardGrid></div>
+      </CardGrid></CSSFix>
       </div>
       )
     }
@@ -113,8 +100,7 @@ const HeroText = styled.div`
   display: flex;
   margin-bottom: 60px;
   padding-top: 100px;
-  animation: Rise 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
-  opacity: 0;
+  animate: Rise 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 `
 
 const LifeCount = styled.span`
@@ -158,6 +144,16 @@ const TestInput = styled.div`
     background-color: rgba(0, 0, 0, .1);
     color: white;
   }
+`
+
+const CSSFix = styled.div`
+  transition: .3s all ease;
+  z-index: -1000;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: ${props => props.showing};
 `
 
 export default App;

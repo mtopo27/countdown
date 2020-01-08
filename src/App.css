@@ -24,6 +24,7 @@ body {
   color: white;
   overflow: none;
   text-align: center;
+  position: relative;
 }
 
 .fixer {
@@ -33,7 +34,7 @@ body {
 }
 
 
-@keyframes Rise {
+/* @keyframes Rise {
   0% {
     opacity: 0;
     transform: TranslateY(60px);
@@ -43,7 +44,7 @@ body {
     opacity: 1;
     transform: TranslateY(0px);
   }
-}
+} */
 
 @keyframes CardDeal {
   0% {

@@ -3,7 +3,6 @@ import TenK from './images/10k.svg'
 import TwentyK from './images/20k.svg'
 import Two5K from './images/25k.svg'
 import FortyK from './images/40k.svg'
-import * as app from './App'
 
 export const now = moment()
 
@@ -22,8 +21,7 @@ export const bDayData = function(userBorn, userBday) {
   var percentBday = 100 - ((daysToBday/totalBday) * 100)
   return [daysToBday, percentBday]
 }
-const [currAge, percentBday] = bDayData(moment("1995-06-24"), "1995-06-24")
-console.log(percentBday)
+
 // Get jan 1 date of respective years, days from 'now' to next year, and the percent of the year finished
 export const thisYear = moment().startOf('year')
 export const nextYear = moment().startOf('year').add(1, 'years')
