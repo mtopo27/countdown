@@ -52,7 +52,6 @@ class App extends React.Component {
       </TestInput>
       </div>
     )
-      const active = this.state.hasDate
       return (
         <div className="appContent">
         
@@ -67,7 +66,7 @@ class App extends React.Component {
         </div>
 
         <div className={`${this.state.hasDate ? '' : 'fixer'}`}>
-      <HeroText active>
+      <HeroText>
         <LifeCount>{userDaysOld}</LifeCount>
         <LifeLabel>Days Old</LifeLabel>
       </HeroText>
@@ -109,6 +108,7 @@ class App extends React.Component {
 
 const HeroText = styled.div`
   flex-direction: column;
+  display: flex;
   margin-bottom: 60px;
   padding-top: 100px;
   animation: Rise 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
