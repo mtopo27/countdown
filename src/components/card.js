@@ -14,7 +14,7 @@ const Card = props => (
     <CardTitle>{props.title}</CardTitle>
     <CardImg src={props.image} />
     <div className="stack">
-      <CardData>{props.data}</CardData>
+      <CardData>{props.data || ""}</CardData>
       <DataLabel>{props.label}</DataLabel>
     </div>
     <BarGraph barWidth={props.barWidth}>

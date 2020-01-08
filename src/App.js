@@ -33,14 +33,16 @@ class App extends React.Component {
 
   render() {
     // Constants from states, logic functions held in util
-    const userBday = this.state.dateInput
-    const userBorn = moment(userBday)
-    const userAges = Math.floor(util.now.diff(userBorn, 'years', true))
-    const userDaysOld = util.now.diff(moment(userBday), 'days')
-    const [daysToBday, percentBday] = this.state.hasDate ? util.bDayData(userBorn, userBday) : "0"
-    const [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
-    const [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
-    
+    var userBday = this.state.dateInput
+    var userBorn = moment(userBday)
+    var userAges = Math.floor(util.now.diff(userBorn, 'years', true))
+    var userDaysOld = util.now.diff(moment(userBday), 'days')
+    var [daysToBday, percentBday] = this.state.hasDate ? util.bDayData(userBorn, userBday) : "0"
+    var [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
+    var [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
+    var testerpercentage = percentDec
+console.log(testerpercentage)
+
     const inputPage = (
       <div className="appContent">
       <TestInput>
@@ -67,7 +69,7 @@ class App extends React.Component {
 
         <div className={`${this.state.hasDate ? '' : 'fixer'}`}>
       <HeroText>
-        <LifeCount>{userDaysOld}</LifeCount>
+        <LifeCount>{this.state.hasDate ? userDaysOld : ""}</LifeCount>
         <LifeLabel>Days Old</LifeLabel>
       </HeroText>
 
@@ -91,7 +93,7 @@ class App extends React.Component {
           image={decImage}
           data={daysToBigDay}
           label="Days Remaining"
-          barWidth={percentDays} />
+          barWidth={`${testerpercentage}`} />
 
         <Card
           title={`${currDec}'s to ${nextDec}`}
