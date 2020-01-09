@@ -33,7 +33,7 @@ class App extends React.Component {
 
   render() {
     // Constants from states, logic functions held in util
-    var userBday = this.state.dateInput
+    var userBday = this.state.newBDay
     var userBorn = moment(userBday)
     var userAges = Math.floor(util.now.diff(userBorn, 'years', true))
     var userDaysOld = util.now.diff(moment(userBday), 'days')
@@ -43,68 +43,77 @@ class App extends React.Component {
 
     console.log(percentDec)
 
-    if (!this.state.hasDate) {
-      return (
+    if (this.state.hasDate && this.state.newBDay != '') {
+      return(
         <div className="appContent">
-            <TestInput topper={!this.state.hasDate}>
-             <input 
-                type="date" 
-                onChange={this.handleChange}>
-              </input>
-              <button onClick={this.handleClick}>Store Date</button>
-              <DNone>
-                  <LifeLabel /> <LifeCount /><HeroText /> <CardGrid /> <Card barWidth={util.decData(24, "1995-06-24").percentBday} />
-              </DNone>
-            </TestInput>
-        </div>
-      );
-    } 
-
-    return(
-      <div className="appContent">
-        <HeroText>
-          <LifeCount>{this.state.hasDate ? userDaysOld : ""}</LifeCount>
-          <LifeLabel>Days Old</LifeLabel>
-        </HeroText>
+          <HeroText>
+            <LifeCount>{this.state.hasDate ? userDaysOld : ""}</LifeCount>
+            <LifeLabel>Days Old</LifeLabel>
+          </HeroText>
+      
+          <CardGrid>
+            <Card
+              title={`${userAges + 1}th Birthday`}
+              image={require('./images/birthday.svg')}
+              data={daysToBday}
+              label="Days Remaining"
+              barWidth="20" />
+  
+            <Card
+              title={`${moment().add(1, 'years').format("YYYY")} New Year`}
+              image={require('./images/newYear.svg')}
+              data={util.daysToYear}
+              label="Days Remaining"
+              barWidth={util.percentYear} />
     
-        <CardGrid>
-          <Card
-            title={`${userAges + 1}th Birthday`}
-            image={require('./images/birthday.svg')}
-            data={daysToBday}
-            label="Days Remaining"
-            barWidth="20" />
-
-          <Card
-            title={`${moment().add(1, 'years').format("YYYY")} New Year`}
-            image={require('./images/newYear.svg')}
-            data={util.daysToYear}
-            label="Days Remaining"
-            barWidth={util.percentYear} />
-  
-          <Card
-            title={`${nextBigDay/1000}k Days`}
-            image={decImage}
-            data={daysToBigDay}
-            label="Days Remaining"
-            barWidth={`${this.state.hasDate ? percentDays : "0"}`} />
-  
-          <Card
-            title={`${currDec}'s to ${nextDec}`}
-            image={require('./images/death.svg')}
-            data={daysToDec}
-            label="Days Remaining"
-            barWidth={`${this.state.hasDate ? percentDec : "0"}`} />
-        </CardGrid>
+            <Card
+              title={`${nextBigDay/1000}k Days`}
+              image={decImage}
+              data={daysToBigDay}
+              label="Days Remaining"
+              barWidth={`${this.state.hasDate ? percentDays : "0"}`} />
+    
+            <Card
+              title={`${currDec}'s to ${nextDec}`}
+              image={require('./images/death.svg')}
+              data={daysToDec}
+              label="Days Remaining"
+              barWidth={`${this.state.hasDate ? percentDec : "0"}`} />
+          </CardGrid>
+        </div>
+       )
+    } 
+console.log(this.state.hasDate)
+    return (
+      <div className="appContent">
+          <TestInput>
+           <input 
+              type="date" 
+              onChange={this.handleChange}>
+            </input>
+            <button onClick={this.handleClick}>Store Date</button>
+            <ErrorPop popper={`${this.state.hasDate && this.state.newBDay === '' ? "1" : "0"}`} message="Please Insert Your Birthday"/>
+            <br></br>
+            
+            <ErrorPop popper={"1"} message="yeah"/>
+            <ErrorPop popper={"0"} message="nope"/>
+            <DNone>
+                <LifeLabel /> <LifeCount /><HeroText /> <CardGrid /> <Card barWidth={util.decData(24, "1995-06-24").percentBday} />
+            </DNone>
+          </TestInput>
       </div>
-     )
+    );
+
+    
   }
 }
+
 
 const TestInput = styled.div`
   position: absolute; 
   left: 40%;
-  top: ${prop => prop.topper ? '40%' : '0%'};
+  top: 40%;
+  transition: all .3s ease;
 
   input {
     border: solid 1px black;
@@ -158,5 +167,32 @@ const CardGrid = styled.div`
     justify-content: center;
 }
 `
+
+// const ErrorPopup = (error) => {
+//   const ErrorMessage = styled.span`
+//   opacity: ${props => props.error ? 1 : 0};
+//   transition: opacity 4s;
+//   color: white;
+// `
+
+// return <ErrorMessage>This</ErrorMessage>
+// }
+
+// const ErrorMessage = styled.span`
+// opacity: ${props => props.error}
+// transition: opacity 4s;
+// color: ${props => props.message === "tester" ? "white" : "blue"};
+// `
+
+const ErrorMessage = styled.span`
+opacity: ${props => props.error}
+transition: opacity 4s;
+color: purple;
+`
+
+const ErrorPop = ({ message, popper }) => {
+  return <ErrorMessage error={popper}>{message}</ErrorMessage>
+}
+
 
 export default App;
