@@ -5,6 +5,7 @@ import Card from './components/card';
 import moment from 'moment'
 import * as util from './util'
 
+
   /*
     Questions:
     1. how do I ensure something follows a format '####-##-##'
@@ -29,7 +30,7 @@ class App extends React.Component {
 
   render() {
     // Constants from states, logic functions held in util
-    const userBday = this.state.dateInput
+    const userBday = this.state.hasDate ? this.state.dateInput : "1995-06-24"
     const userBorn = moment(userBday)
     const userAges = Math.floor(util.now.diff(userBorn, 'years', true))
     const userDaysOld = util.now.diff(moment(userBday), 'days')
@@ -39,15 +40,19 @@ class App extends React.Component {
 
       return (
         <div className="appContent">
-        <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
           {!this.state.hasDate ? 
-            (<TestInput>
-              <input 
+            (<TestInput topper={!this.state.hasDate}>
+             <input 
                 type="date" 
                 onChange={this.handleChange}>
               </input>
               <button onClick={this.handleClick}>Store Date</button>
-            </TestInput>) : ( <>
+              <DNone>
+                  <LifeLabel /> <LifeCount /><HeroText /> <CardGrid /> <Card barWidth={percentBday} />
+              </DNone>
+            </TestInput>
+
+            ) : ( <>
       <HeroText>
         <LifeCount>{this.state.hasDate ? userDaysOld : ""}</LifeCount>
         <LifeLabel>Days Old</LifeLabel>
@@ -59,7 +64,7 @@ class App extends React.Component {
             image={require('./images/birthday.svg')}
             data={daysToBday}
             label="Days Remaining"
-            barWidth={percentBday} />
+            barWidth={`${this.state.hasDate ? percentBday : "0"}`} />
 
           <Card
             title={`${moment().add(1, 'years').format("YYYY")} New Year`}
@@ -80,7 +85,7 @@ class App extends React.Component {
             image={require('./images/death.svg')}
             data={daysToDec}
             label="Days Remaining"
-            barWidth={percentDec} />
+            barWidth={parseFloat(percentDec)} />
         </CardGrid>
         </>)
 
@@ -90,11 +95,10 @@ class App extends React.Component {
   }
 }
 
-
 const TestInput = styled.div`
   position: absolute; 
   left: 40%;
-  top: 40%;
+  top: ${prop => prop.topper ? '40%' : '0%'};
 
   input {
     border: solid 1px black;
@@ -105,14 +109,20 @@ const TestInput = styled.div`
     color: white;
   }
 `
+const DNone = styled.div`
+  visibility: hidden;
+  opacity: 0;
+  z-index: -1000;
+  display: none;
+`
 
 const HeroText = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
   padding-top: 100px;
-  animation: Rise 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
   opacity: 0;
+  animation: Rise 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 `
 
 const LifeCount = styled.span`
