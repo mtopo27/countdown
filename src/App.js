@@ -5,7 +5,6 @@ import Card from './components/card';
 import moment from 'moment'
 import * as util from './util'
 
-
   /*
     Questions:
     1. how do I ensure something follows a format '####-##-##'
@@ -13,50 +12,60 @@ import * as util from './util'
     4. Animating between returns? 
   */
 
+
 class App extends React.Component {
   state = {
     dateInput: '',
-    hasDate: false
+    hasDate: false,
+    newBDay: ''
   }
+
 
   handleChange = (event) => {
     this.setState({dateInput: event.target.value});
   }
 
   handleClick = (event) => {
-    this.setState({hasDate: true});
+    this.setState({hasDate: true})
+    this.setState({newBDay: this.state.dateInput})
   }
 
 
   render() {
     // Constants from states, logic functions held in util
-    const userBday = this.state.hasDate ? this.state.dateInput : "1995-06-24"
-    const userBorn = moment(userBday)
-    const userAges = Math.floor(util.now.diff(userBorn, 'years', true))
-    const userDaysOld = util.now.diff(moment(userBday), 'days')
-    const [daysToBday, percentBday] = util.bDayData(userBorn, userBday)
-    const [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
-    const [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
+    var userBday = this.state.dateInput
+    var userBorn = moment(userBday)
+    var userAges = Math.floor(util.now.diff(userBorn, 'years', true))
+    var userDaysOld = util.now.diff(moment(userBday), 'days')
+    var [daysToBday, percentBday] = util.bDayData(userBorn, userBday)
+    var [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
+    var [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
 
+    console.log(percentDec)
+
+    if (!this.state.hasDate) {
       return (
         <div className="appContent">
-          {!this.state.hasDate ? 
-            (<TestInput topper={!this.state.hasDate}>
+            <TestInput topper={!this.state.hasDate}>
              <input 
                 type="date" 
                 onChange={this.handleChange}>
               </input>
               <button onClick={this.handleClick}>Store Date</button>
               <DNone>
-                  <LifeLabel /> <LifeCount /><HeroText /> <CardGrid /> <Card barWidth={percentBday} />
+                  <LifeLabel /> <LifeCount /><HeroText /> <CardGrid /> <Card barWidth={util.decData(24, "1995-06-24").percentBday} />
               </DNone>
             </TestInput>
+        </div>
+      );
+    } 
 
-            ) : ( <>
-      <HeroText>
-        <LifeCount>{this.state.hasDate ? userDaysOld : ""}</LifeCount>
-        <LifeLabel>Days Old</LifeLabel>
-      </HeroText>
+    return(
+      <div className="appContent">
+        <HeroText>
+          <LifeCount>{this.state.hasDate ? userDaysOld : ""}</LifeCount>
+          <LifeLabel>Days Old</LifeLabel>
+        </HeroText>
     
         <CardGrid>
           <Card
@@ -64,7 +73,7 @@ class App extends React.Component {
             image={require('./images/birthday.svg')}
             data={daysToBday}
             label="Days Remaining"
-            barWidth={`${this.state.hasDate ? percentBday : "0"}`} />
+            barWidth="20" />
 
           <Card
             title={`${moment().add(1, 'years').format("YYYY")} New Year`}
@@ -78,20 +87,17 @@ class App extends React.Component {
             image={decImage}
             data={daysToBigDay}
             label="Days Remaining"
-            barWidth={percentDays} />
+            barWidth={`${this.state.hasDate ? percentDays : "0"}`} />
   
           <Card
             title={`${currDec}'s to ${nextDec}`}
             image={require('./images/death.svg')}
             data={daysToDec}
             label="Days Remaining"
-            barWidth={parseFloat(percentDec)} />
+            barWidth={`${this.state.hasDate ? percentDec : "0"}`} />
         </CardGrid>
-        </>)
-
-        }
-        </div>
-     );
+      </div>
+     )
   }
 }
 
