@@ -19,10 +19,34 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
   color: white;
   overflow: none;
   text-align: center;
+}
+
+.underCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 50px;
+  padding-right: 50px;
+  opacity: 0;
+  animation: Rise 1.5s .4s forwards ease;
+}
+
+.labels {
+  display: grid;
+  grid-gap: 32px;
+  font-size: 1.33rem;
+  grid-template-columns: auto auto auto
+}
+
+.shortTerm {
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: min-content;
+
 }
 
 

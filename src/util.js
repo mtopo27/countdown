@@ -4,33 +4,21 @@ import TwentyK from './images/20k.svg'
 import Two5K from './images/25k.svg'
 import FortyK from './images/40k.svg'
 
-console.log(moment().format("ddd, MMMM"))
-
-// export const birthdayInput = prompt("Enter your birthday as 'YYYY-MM-DD'", "YYYY-MM-DD")
-
-// Birthday and born are needed in order to keep a moment variable that isn't mutated. When .add or .subtract, use moment(birthday). When using diff you can just use born
 export const now = moment()
 
 function percenting(a, b) {
   return 100 - ((a/b) * 100)
 }
 
-export const testerFunction = function(numX) {
-  var first = 3 - numX;
-  var second = 3 + numX;
-  return [first, second]
-}
-
-
-// Get the age, date of last and next birthday, days to next birthday, and % of year age finished
-
+// 
 export const bDayData = function(userBorn, userBday) {
   var currAge = Math.floor(moment().diff(userBorn, 'years', true));
   var prevBday = moment(userBday).add(currAge, 'years', true);
   var nextBday = moment(userBday).add(currAge + 1, 'years', true);
   var daysToBday = nextBday.diff(moment(), 'days');
   var totalBday = nextBday.diff(prevBday, 'days');
-  var percentBday = percenting(daysToBday, totalBday)
+  // var percentBday = percenting(daysToBday, totalBday)
+  var percentBday = 100 - ((daysToBday/totalBday) * 100)
   return [daysToBday, percentBday]
 }
 
@@ -48,7 +36,7 @@ export const daysOldData = function(userBday) {
   (daysOld<10000) ? 10000 : 
     (daysOld>10000 && daysOld<20000 ? 20000 : 
       (daysOld>20000 && daysOld<25000 ? 25000 : 
-        (daysOld>25000 && daysOld<40000 ? 40000 : "wow, good job")
+        (daysOld>=25000 && daysOld<40000 ? 40000 : "wow, good job")
       )
   );
   var bigDayDate = moment(userBday).add(nextBigDay, 'days');
@@ -75,3 +63,10 @@ export const decData = function(userAge, userBday) {
   var percentDec = percenting(daysToDec, totalDec);
   return [currDec, nextDec, daysToDec, percentDec]
 }
+
+export const tryData = function(me) {
+  const tryThis = me;
+  const tryThat = me + me;
+  return { tryThis, tryThat }
+}
+

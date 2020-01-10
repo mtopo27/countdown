@@ -19,7 +19,8 @@ class App extends React.Component {
   state = {
     dateInput: '',
     hasDate: false,
-    newBDay: ''
+    newBDay: '',
+    dayData: 'remaining'
   }
 
   handleChange = (event) => {
@@ -27,25 +28,25 @@ class App extends React.Component {
   }
 
   handleClick = (event) => {
-    setTimeout(() => this.setState({hasDate: true}),420);
+    setTimeout(() => this.setState({hasDate: true}),400);
     this.setState({newBDay: this.state.dateInput})
   }
 
   render() {
     // Constants from states, logic functions held in util
-    var userBday = this.state.dateInput
+    var userBday = this.state.newBDay
     var userBorn = moment(userBday)
     var userAges = Math.floor(util.now.diff(userBorn, 'years', true))
     var userDaysOld = util.now.diff(moment(userBday), 'days')
     var [daysToBday, percentBday] = util.bDayData(userBorn, userBday)
     var [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
     var [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
-    // var [currDec, nextDec, daysToDec, percentDec] = util.decData(24, "1995-06-24")
-    console.log(percentDec)
+
+    console.log(this.state.dayData)
 
     if (this.state.hasDate && this.state.newBDay != '') {
       return(
-        <div className="appContent">
+        <AppContent>
           <TopMain daysOld={userDaysOld} />
       
           <CardGrid>
@@ -70,7 +71,6 @@ class App extends React.Component {
               label="Days Remaining"
               fill={`${this.state.hasDate ? percentDays : "0"}`} />
 
-            {/* <Carder title={"10"} /> */}
 
             <Card
               title={`${currDec}'s to ${nextDec}`}
@@ -79,12 +79,30 @@ class App extends React.Component {
               label="Days Remaining"
               fill={percentDec} />
           </CardGrid>
-        </div>
+          <div className="underCard">
+            <div className="shortTerm">
+              <StyledInput 
+                type="date" 
+                onChange={this.handleChange}
+              />
+              <InputClicker 
+                ready={this.state.dateInput != this.state.newBDay ? "1" : "0"} 
+                clicker={this.handleClick}
+                initialPage={false}
+              />
+            </div>
+            <div className="labels">
+              <span>Days Remaining</span>
+              <span>Days Elapsed</span>
+              <span>% done</span>
+            </div>
+          </div>
+        </AppContent>
        )
     } 
 
     return (
-      <div className="appContent">
+      <AppContent>
           <Fading fading={this.state.newBDay != '' ? "0" : "1"}><TestInput>
             <InputHero>
               When were you born?
@@ -93,21 +111,41 @@ class App extends React.Component {
               <StyledInput 
                   type="date" 
                   onChange={this.handleChange}
-                  placeholder="MM-DD-YYYY">
+                  initialPage
+                  >
               </StyledInput>
-             <InputClicker ready={this.state.dateInput ? "1" : "0"} clicker={this.handleClick}/>
+             <InputClicker 
+              ready={this.state.dateInput ? "1" : "0"} 
+              clicker={this.handleClick}
+              initialPage={true}
+              />
             </div>
             <ErrorPop popper={`${this.state.hasDate && this.state.newBDay === '' ? "1" : "0"}`} message="Please Insert Your Birthday"/>
           </TestInput></Fading>
+            {/* This is stupid and for the life of me I don't know why, but for the styles to properly show post state change, the following section had to be in */}
             <DNone>
-                <LifeLabel /> <LifeCount /><HeroText /> <CardGrid /> <Carder title={20}  />
+                <LifeLabel /> <LifeCount /><HeroText /> 
+                <CardGrid /> <Card /> 
+                <StyledInput /> <InputClicker />
                 <ErrorPop popper={"1"} message="Please Insert Your Birthday"/>
-                <InputClicker ready={"1"} /> <Fading fading={0}/> <Fading fading={1}/>
+                <InputClicker ready={"1"} initialPage={true} /> <InputClicker ready={"0"} initialPage={false}/> <InputClicker ready={"1"} initialPage={false}/> <Fading fading={0}/> <Fading fading={1}/>
             </DNone>
-      </div>
+      </AppContent>
     );
   }
 }
+
+const AppContent = styled.div`
+  background-color: #151B26;
+  justify-content: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  overflow: none;
+  text-align: center;
+`
 
 const TestInput = styled.div`
   display: Flex;
@@ -127,18 +165,26 @@ const TestInput = styled.div`
 const StyledInput = styled.input`
   background-color: rgba(0, 0, 0, 0);
   font-family: 'Oxygen', sans-serif;
-  font-size: 2.75rem;
-  padding: 8px 80px;
+  font-size: ${props => props.initialPage ? "2.75rem" : "1.5rem"};
+  padding: ${props => props.initialPage ? "8px 80px" : "2px 8px"};
   border: none;
   text-align: center;
-  border-bottom: solid 2px white;
-  color: rgba(255, 255, 255, .9);
+  border-bottom: solid 2px rgba(255, 255, 255, .8);
+  color: rgba(255, 255, 255, .5);
   transition: all .5s ease;
   cursor: text;
+  position: relative;
+  display: flex;
+  justify-content: center;
 
   :focus {
     outline: none;
-    border-bottom: solid 2px #0578F2;
+    border-bottom: solid 2px #025FEB;
+    color: rgba(255, 255, 255, .8);
+  }
+
+  :after {
+    position: absolute;
   }
 
   ::-webkit-inner-spin-button {
@@ -181,7 +227,7 @@ const HeroText = styled.div`
   flex-direction: column;
   margin-bottom: 60px;
   opacity: 0;
-  animation: Rise 1.5s .5s forwards ease;
+  animation: Rise 1.5s .4s forwards ease;
 `
 
 const LifeCount = styled.span`
@@ -198,14 +244,14 @@ const LifeLabel = styled.span`
 const CardGrid = styled.div`
   display: grid;
   margin-bottom: 10vh;
-  grid-template-columns: repeat( auto-fit, 290px );
+  grid-template-columns: repeat( auto-fit, 250px );
   grid-gap: 48px 24px;
   padding-left: 50px;
   padding-right: 50px;
   justify-content: space-between;
   transition: all .3s;
   opacity: 0;
-  animation: Rise 1.5s .5s forwards ease;
+  animation: Rise 1.5s .4s forwards ease;
 
   @media (max-width: 720px) {
     justify-content: center;
@@ -223,9 +269,11 @@ const InputImage = styled.img`
   transition: .8s all ease;
   opacity: ${props => props.ready};
   right: 0%;
-  width: 36px;
+  width: ${props => props.initialPage ? "36px" : "20px"};
   cursor: pointer;
 `
+
+
 
 const FadeOut = styled.div`
   opacity: ${props => props.fade};
@@ -254,12 +302,9 @@ const InputClicker = props => {
           <InputImage 
             src={require('./images/arrow.svg')} 
             ready={props.ready} 
+            initialPage={props.initialPage}
             onClick={props.clicker} />
         ) 
-}
-
-const Carder = props => {
-  return <Card fill={props.title}></Card>
 }
 
 const TesterInput = ({ children }) => {
