@@ -54,21 +54,21 @@ class App extends React.Component {
               image={require('./images/birthday.svg')}
               data={daysToBday}
               label="Days Remaining"
-              fillWidth="20" />
+              fill="20" />
   
             <Card
               title={`${moment().add(1, 'years').format("YYYY")} New Year`}
               image={require('./images/newYear.svg')}
               data={util.daysToYear}
               label="Days Remaining"
-              barWidth={util.percentYear} />
+              fill={util.percentYear} />
     
             <Card
               title={`${nextBigDay/1000}k Days`}
               image={decImage}
               data={daysToBigDay}
               label="Days Remaining"
-              barWidth={`${this.state.hasDate ? percentDays : "0"}`} />
+              fill={`${this.state.hasDate ? percentDays : "0"}`} />
 
             {/* <Carder title={"10"} /> */}
 
@@ -77,7 +77,7 @@ class App extends React.Component {
               image={require('./images/death.svg')}
               data={daysToDec}
               label="Days Remaining"
-              fillWidth={percentDec} />
+              fill={percentDec} />
           </CardGrid>
         </div>
        )
@@ -259,7 +259,7 @@ const InputClicker = props => {
 }
 
 const Carder = props => {
-  return <Card barWidth={props.title}></Card>
+  return <Card fill={props.title}></Card>
 }
 
 const TesterInput = ({ children }) => {

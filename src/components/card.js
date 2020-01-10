@@ -18,7 +18,7 @@ const Card = (props) => (
       <DataLabel>{props.label}</DataLabel>
     </div>
     <BarGraph>
-      <Filler fillWidth={props.barWidth} />
+      <div style={{width: props.fill + '%'}} />
     </BarGraph>
   </CardContainer>
 )
@@ -65,6 +65,14 @@ const BarGraph = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+
+  div {
+    position: absolute;
+    background-color: #0578F2;
+    height: 8px;
+    border-radius: 20px;
+    animation: Grow 3s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
 `
 
 const BarFill = styled.div`
