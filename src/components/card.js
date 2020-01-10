@@ -9,7 +9,7 @@ import './card.css'
  *  title: string
  * }} props 
  */
-const Card = props => (
+const Card = (props) => (
   <CardContainer>
     <CardTitle>{props.title}</CardTitle>
     <CardImg src={props.image} />
@@ -18,17 +18,17 @@ const Card = props => (
       <DataLabel>{props.label}</DataLabel>
     </div>
     <BarGraph>
-      <BarFill barWidth={props.barWidth} />
+      <Filler fillWidth={props.barWidth} />
     </BarGraph>
   </CardContainer>
 )
 
 const CardContainer = styled.div`
   padding: 16px 20px;
-  background-color: #12121a
+  background-color: #0C0C12;
   border-radius: 24px;
   width: 250px;
-  box-shadow: 0px 3px 10px 0 rgba(0, 0, 0, .1);
+  box-shadow: 0px 3px 12px 0 rgba(0, 0, 0, .2);
   display: grid;
   grid-template-rows: repeat(4, auto);
   grid-gap: 24px;
@@ -48,7 +48,7 @@ const CardImg = styled.img`
 const CardData = styled.span`
   font-weight: bold;
   font-size: 2rem;
-  color: white
+  color: white;
   margin-bottom: 2px;
 `
 
@@ -70,12 +70,14 @@ const BarGraph = styled.div`
 const BarFill = styled.div`
   position: absolute;
   background-color: #0578F2;
-  width: ${props => props.barWidth}%;
+  width: ${props => props.barWidth || "0"}%;
   height: 8px;
   border-radius: 20px;
   animation: Grow 3s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 `
-
+const Filler = ({ fillWidth }) => {
+  return <BarFill barWidth={fillWidth} />
+}
 
 
 export default Card

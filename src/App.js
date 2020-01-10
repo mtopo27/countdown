@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import Card from './components/card';
 import moment from 'moment'
 import * as util from './util'
+import Arrow from './images/arrow.svg'
+
 
   /*
     Questions:
@@ -20,36 +22,31 @@ class App extends React.Component {
     newBDay: ''
   }
 
-
   handleChange = (event) => {
     this.setState({dateInput: event.target.value});
   }
 
   handleClick = (event) => {
-    this.setState({hasDate: true})
+    setTimeout(() => this.setState({hasDate: true}),420);
     this.setState({newBDay: this.state.dateInput})
   }
 
-
   render() {
     // Constants from states, logic functions held in util
-    var userBday = this.state.newBDay
+    var userBday = this.state.dateInput
     var userBorn = moment(userBday)
     var userAges = Math.floor(util.now.diff(userBorn, 'years', true))
     var userDaysOld = util.now.diff(moment(userBday), 'days')
     var [daysToBday, percentBday] = util.bDayData(userBorn, userBday)
     var [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
     var [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
-
+    // var [currDec, nextDec, daysToDec, percentDec] = util.decData(24, "1995-06-24")
     console.log(percentDec)
 
     if (this.state.hasDate && this.state.newBDay != '') {
       return(
         <div className="appContent">
-          <HeroText>
-            <LifeCount>{this.state.hasDate ? userDaysOld : ""}</LifeCount>
-            <LifeLabel>Days Old</LifeLabel>
-          </HeroText>
+          <TopMain daysOld={userDaysOld} />
       
           <CardGrid>
             <Card
@@ -57,7 +54,7 @@ class App extends React.Component {
               image={require('./images/birthday.svg')}
               data={daysToBday}
               label="Days Remaining"
-              barWidth="20" />
+              fillWidth="20" />
   
             <Card
               title={`${moment().add(1, 'years').format("YYYY")} New Year`}
@@ -72,58 +69,106 @@ class App extends React.Component {
               data={daysToBigDay}
               label="Days Remaining"
               barWidth={`${this.state.hasDate ? percentDays : "0"}`} />
-    
+
+            {/* <Carder title={"10"} /> */}
+
             <Card
               title={`${currDec}'s to ${nextDec}`}
               image={require('./images/death.svg')}
               data={daysToDec}
               label="Days Remaining"
-              barWidth={`${this.state.hasDate ? percentDec : "0"}`} />
+              fillWidth={percentDec} />
           </CardGrid>
         </div>
        )
     } 
-console.log(this.state.hasDate)
+
     return (
       <div className="appContent">
-          <TestInput>
-           <input 
-              type="date" 
-              onChange={this.handleChange}>
-            </input>
-            <button onClick={this.handleClick}>Store Date</button>
+          <Fading fading={this.state.newBDay != '' ? "0" : "1"}><TestInput>
+            <InputHero>
+              When were you born?
+            </InputHero>
+            <div>
+              <StyledInput 
+                  type="date" 
+                  onChange={this.handleChange}
+                  placeholder="MM-DD-YYYY">
+              </StyledInput>
+             <InputClicker ready={this.state.dateInput ? "1" : "0"} clicker={this.handleClick}/>
+            </div>
             <ErrorPop popper={`${this.state.hasDate && this.state.newBDay === '' ? "1" : "0"}`} message="Please Insert Your Birthday"/>
-            <br></br>
-            
-            <ErrorPop popper={"1"} message="yeah"/>
-            <ErrorPop popper={"0"} message="nope"/>
+          </TestInput></Fading>
             <DNone>
-                <LifeLabel /> <LifeCount /><HeroText /> <CardGrid /> <Card barWidth={util.decData(24, "1995-06-24").percentBday} />
+                <LifeLabel /> <LifeCount /><HeroText /> <CardGrid /> <Carder title={20}  />
+                <ErrorPop popper={"1"} message="Please Insert Your Birthday"/>
+                <InputClicker ready={"1"} /> <Fading fading={0}/> <Fading fading={1}/>
             </DNone>
-          </TestInput>
       </div>
     );
-
-    
   }
 }
 
-
 const TestInput = styled.div`
-  position: absolute; 
-  left: 40%;
-  top: 40%;
-  transition: all .3s ease;
+  display: Flex;
+  flex-direction: column;
+  padding-bottom: 20vh;
 
-  input {
-    border: solid 1px black;
-  }
-
-  button {
-    background-color: rgba(0, 0, 0, .1);
-    color: white;
+  div {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: auto;
   }
 `
+
+const StyledInput = styled.input`
+  background-color: rgba(0, 0, 0, 0);
+  font-family: 'Oxygen', sans-serif;
+  font-size: 2.75rem;
+  padding: 8px 80px;
+  border: none;
+  text-align: center;
+  border-bottom: solid 2px white;
+  color: rgba(255, 255, 255, .9);
+  transition: all .5s ease;
+  cursor: text;
+
+  :focus {
+    outline: none;
+    border-bottom: solid 2px #0578F2;
+  }
+
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+    z-index: -1000;
+  }
+
+  ::-webkit-calendar-picker-indicator {
+    -webkit-appearance: none;
+    display: none;
+    z-index: -1000;
+}
+
+::-webkit-clear-button {
+  display: none;
+}
+
+}
+`
+
+const InputHero = styled.span`
+  font-size: 3.5rem;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 88px;
+`
+
+
+
 const DNone = styled.div`
   visibility: hidden;
   opacity: 0;
@@ -135,9 +180,8 @@ const HeroText = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
-  padding-top: 100px;
   opacity: 0;
-  animation: Rise 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: Rise 1.5s .5s forwards ease;
 `
 
 const LifeCount = styled.span`
@@ -153,46 +197,81 @@ const LifeLabel = styled.span`
 
 const CardGrid = styled.div`
   display: grid;
+  margin-bottom: 10vh;
   grid-template-columns: repeat( auto-fit, 290px );
-  grid-gap: 60px 40px;
+  grid-gap: 48px 24px;
   padding-left: 50px;
   padding-right: 50px;
   justify-content: space-between;
-  transition: all ease-in-out .3s;
-  position-relative
+  transition: all .3s;
   opacity: 0;
-  animation: Rise 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: Rise 1.5s .5s forwards ease;
 
   @media (max-width: 720px) {
     justify-content: center;
 }
 `
 
-// const ErrorPopup = (error) => {
-//   const ErrorMessage = styled.span`
-//   opacity: ${props => props.error ? 1 : 0};
-//   transition: opacity 4s;
-//   color: white;
-// `
-
-// return <ErrorMessage>This</ErrorMessage>
-// }
-
-// const ErrorMessage = styled.span`
-// opacity: ${props => props.error}
-// transition: opacity 4s;
-// color: ${props => props.message === "tester" ? "white" : "blue"};
-// `
-
 const ErrorMessage = styled.span`
-opacity: ${props => props.error}
-transition: opacity 4s;
-color: purple;
+  opacity: ${props => props.error};
+  transition: opacity .4s ease;
+  color: purple;
 `
 
-const ErrorPop = ({ message, popper }) => {
-  return <ErrorMessage error={popper}>{message}</ErrorMessage>
+const InputImage = styled.img`
+  position: absolute;
+  transition: .8s all ease;
+  opacity: ${props => props.ready};
+  right: 0%;
+  width: 36px;
+  cursor: pointer;
+`
+
+const FadeOut = styled.div`
+  opacity: ${props => props.fade};
+  transition: all .4s ease;
+`
+
+const Fading = ({ fading, children }) => {
+  return <FadeOut fade={fading} >{children}</FadeOut>
 }
+
+const ErrorPop = props => {
+  return <ErrorMessage error={props.popper}>Please Insert Your Birthday</ErrorMessage>
+}
+
+const TopMain = props => {
+  return (          
+  <HeroText>
+    <LifeCount>{props.daysOld}</LifeCount>
+    <LifeLabel>Days Old</LifeLabel>
+  </HeroText>
+  )
+}
+
+const InputClicker = props => {
+  return (
+          <InputImage 
+            src={require('./images/arrow.svg')} 
+            ready={props.ready} 
+            onClick={props.clicker} />
+        ) 
+}
+
+const Carder = props => {
+  return <Card barWidth={props.title}></Card>
+}
+
+const TesterInput = ({ children }) => {
+  return <TestInput>{children}</TestInput>
+}
+
+const InputField = ({ clickFunction, children }) => {
+  return <input type="text" placeholder="MM-DD-YYYY" onChange={clickFunction}>{children}</input>
+}
+
+
+
 
 
 export default App;
