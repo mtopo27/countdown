@@ -20,7 +20,7 @@ class App extends React.Component {
     dateInput: '',
     hasDate: false,
     newBDay: '',
-    dayData: 'remaining'
+    dataDisplay: "Days Remaining"
   }
 
   handleChange = (event) => {
@@ -32,17 +32,32 @@ class App extends React.Component {
     this.setState({newBDay: this.state.dateInput})
   }
 
+  handleDisplay = (value) => {
+    this.setState({dataDisplay: value})
+  }
+
+  
+
   render() {
     // Constants from states, logic functions held in util
     var userBday = this.state.newBDay
     var userBorn = moment(userBday)
     var userAges = Math.floor(util.now.diff(userBorn, 'years', true))
     var userDaysOld = util.now.diff(moment(userBday), 'days')
-    var [daysToBday, percentBday] = util.bDayData(userBorn, userBday)
+    var [daysToBday, daysFromBday, percentBday] = util.bDayData(userBorn, userBday)
     var [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
-    var [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
+    var [currDec, nextDec, daysToDec, daysFromDec, percentDec] = util.decData(userAges, userBday)
+    const displayControl = (first, second, third) => {
+      if (this.state.dataDisplay === "Days Remaining") {
+        return first
+      } else if (this.state.dataDisplay === "Days Elapsed") {
+        return second
+      } else {
+        return `${Math.floor(third)}%`
+      }
+    } 
 
-    console.log(this.state.dayData)
+    console.log(percentBday)
 
     if (this.state.hasDate && this.state.newBDay != '') {
       return(
@@ -53,30 +68,30 @@ class App extends React.Component {
             <Card
               title={`${userAges + 1}th Birthday`}
               image={require('./images/birthday.svg')}
-              data={daysToBday}
-              label="Days Remaining"
-              fill="20" />
+              data={displayControl(daysToBday, daysFromBday, percentBday)}
+              label={this.state.dataDisplay}
+              fill={percentBday} />
   
             <Card
               title={`${moment().add(1, 'years').format("YYYY")} New Year`}
               image={require('./images/newYear.svg')}
-              data={util.daysToYear}
-              label="Days Remaining"
+              data={displayControl(util.daysToYear, util.daysFromYear, util.percentYear)}
+              label={this.state.dataDisplay}
               fill={util.percentYear} />
     
             <Card
               title={`${nextBigDay/1000}k Days`}
               image={decImage}
-              data={daysToBigDay}
-              label="Days Remaining"
+              data={displayControl(daysToBigDay, userDaysOld, percentDays)}
+              label={this.state.dataDisplay}
               fill={`${this.state.hasDate ? percentDays : "0"}`} />
 
 
             <Card
               title={`${currDec}'s to ${nextDec}`}
               image={require('./images/death.svg')}
-              data={daysToDec}
-              label="Days Remaining"
+              data={displayControl(daysToDec, daysFromDec, percentDec)}
+              label={this.state.dataDisplay}
               fill={percentDec} />
           </CardGrid>
           <div className="underCard">
@@ -92,9 +107,22 @@ class App extends React.Component {
               />
             </div>
             <div className="labels">
-              <span>Days Remaining</span>
-              <span>Days Elapsed</span>
-              <span>% done</span>
+              <DisplayOptions 
+                active={this.state.dataDisplay === "Days Remaining"} 
+                clicking={() => this.handleDisplay("Days Remaining")}>
+                  Days Remaining
+              </DisplayOptions>
+              <DisplayOptions 
+                active={this.state.dataDisplay === "Days Elapsed"} 
+                clicking={() => this.handleDisplay("Days Elapsed")}>
+                  Days Elapsed
+              </DisplayOptions>
+              <DisplayOptions 
+                active={this.state.dataDisplay === "Percent Done"} 
+                clicking={() => this.handleDisplay("Percent Done")}>
+                  Percent done
+              </DisplayOptions>
+              <DisplayActive />
             </div>
           </div>
         </AppContent>
@@ -127,6 +155,7 @@ class App extends React.Component {
                 <LifeLabel /> <LifeCount /><HeroText /> 
                 <CardGrid /> <Card /> 
                 <StyledInput /> <InputClicker />
+                <DisplayOptions active={true} /> <DisplayOptions active={false} />
                 <ErrorPop popper={"1"} message="Please Insert Your Birthday"/>
                 <InputClicker ready={"1"} initialPage={true} /> <InputClicker ready={"0"} initialPage={false}/> <InputClicker ready={"1"} initialPage={false}/> <Fading fading={0}/> <Fading fading={1}/>
             </DNone>
@@ -213,7 +242,29 @@ const InputHero = styled.span`
   margin-bottom: 88px;
 `
 
+const DisplayText = styled.span`
+  transition: all .3s ease;
+  color: ${props => props.active ? "white" : "rgba(255, 255, 255, .5)"};
+  font-weight: ${props => props.active ? "bold" : "normal"};
 
+  :hover {
+    color: white;
+    cursor: pointer;
+  }
+`
+const DisplayOptions = ({ active, children, clicking }) => {
+  return <DisplayText onClick={clicking} active={active}>{children}</DisplayText>
+}
+
+const DisplayActive = styled.div`
+  position: absolute;
+  width: 165px;
+  height: 0px;
+  border-radius: 20px;
+  background-color: #025FEB;
+  left: 0;
+  bottom: -6px;
+`
 
 const DNone = styled.div`
   visibility: hidden;
@@ -244,7 +295,7 @@ const LifeLabel = styled.span`
 const CardGrid = styled.div`
   display: grid;
   margin-bottom: 10vh;
-  grid-template-columns: repeat( auto-fit, 250px );
+  grid-template-columns: repeat( auto-fit, 265px );
   grid-gap: 48px 24px;
   padding-left: 50px;
   padding-right: 50px;

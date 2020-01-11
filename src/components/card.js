@@ -70,6 +70,7 @@ const BarGraph = styled.div`
     position: absolute;
     background-color: #025FEB;
     height: 8px;
+    transition: all .3s ease;
     border-radius: 20px;
     animation: Grow 2s 0.5s forwards ease;
   }

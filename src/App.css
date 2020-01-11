@@ -36,9 +36,11 @@ body {
 
 .labels {
   display: grid;
-  grid-gap: 32px;
+  grid-gap: 40px;
+  transition: all .3s ease;
   font-size: 1.33rem;
-  grid-template-columns: auto auto auto
+  grid-template-columns: repeat(3, 165px);
+  position: relative;
 }
 
 .shortTerm {
