@@ -57,8 +57,6 @@ class App extends React.Component {
       }
     } 
 
-    console.log(percentBday)
-
     if (this.state.hasDate && this.state.newBDay != '') {
       return(
         <AppContent>
