@@ -118,7 +118,7 @@ class App extends React.Component {
               <DisplayOptions 
                 active={this.state.dataDisplay === "Percent Done"} 
                 clicking={() => this.handleDisplay("Percent Done")}>
-                  Percent done
+                  Percent Done
               </DisplayOptions>
             </div>
           </div>
