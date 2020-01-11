@@ -122,7 +122,6 @@ class App extends React.Component {
                 clicking={() => this.handleDisplay("Percent Done")}>
                   Percent done
               </DisplayOptions>
-              <DisplayActive />
             </div>
           </div>
         </AppContent>
@@ -174,6 +173,11 @@ const AppContent = styled.div`
   color: white;
   overflow: none;
   text-align: center;
+  
+  @media (max-width: 1200px) {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
 `
 
 const TestInput = styled.div`
@@ -183,6 +187,7 @@ const TestInput = styled.div`
 
   div {
     width: fit-content;
+    max-width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -256,16 +261,6 @@ const DisplayOptions = ({ active, children, clicking }) => {
   return <DisplayText onClick={clicking} active={active}>{children}</DisplayText>
 }
 
-const DisplayActive = styled.div`
-  position: absolute;
-  width: 165px;
-  height: 0px;
-  border-radius: 20px;
-  background-color: #025FEB;
-  left: 0;
-  bottom: -6px;
-`
-
 const DNone = styled.div`
   visibility: hidden;
   opacity: 0;
@@ -294,9 +289,9 @@ const LifeLabel = styled.span`
 
 const CardGrid = styled.div`
   display: grid;
-  margin-bottom: 10vh;
+  margin-bottom: 6vh;
   grid-template-columns: repeat( auto-fit, 265px );
-  grid-gap: 48px 24px;
+  grid-gap: 48px 16px;
   padding-left: 50px;
   padding-right: 50px;
   justify-content: space-between;
@@ -304,8 +299,15 @@ const CardGrid = styled.div`
   opacity: 0;
   animation: Rise 1.5s .4s forwards ease;
 
+  @media (max-width: 1200px) {
+    grid-template-columns: 265px 265px;
+    justify-content: space-around;
+  }
+
   @media (max-width: 720px) {
     justify-content: center;
+    grid-template-columns: 265px;
+    margin-bottom: 24px;
 }
 `
 
@@ -356,14 +358,6 @@ const InputClicker = props => {
             initialPage={props.initialPage}
             onClick={props.clicker} />
         ) 
-}
-
-const TesterInput = ({ children }) => {
-  return <TestInput>{children}</TestInput>
-}
-
-const InputField = ({ clickFunction, children }) => {
-  return <input type="text" placeholder="MM-DD-YYYY" onChange={clickFunction}>{children}</input>
 }
 
 
