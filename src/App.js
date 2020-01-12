@@ -358,8 +358,21 @@ const InputClicker = props => {
         ) 
 }
 
+const InputDefault = styled(StyledInput)`
+  :after {
+    content: ${props => props.afterContent}
+  }
+
+  :focus:after {
+    content: "";
+  }
+
+`
 
 
+const MainInput = ({ afterContent }) => {
+  return <InputDefault afterContent={afterContent} />
+}
 
 
 export default App;
