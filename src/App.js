@@ -57,6 +57,8 @@ class App extends React.Component {
       }
     } 
 
+    console.log(moment("1995-06-24").format("MM/DD/YYYY"))
+
     if (this.state.hasDate && this.state.newBDay != '') {
       return(
         <AppContent>
@@ -94,9 +96,10 @@ class App extends React.Component {
           </CardGrid>
           <div className="underCard">
             <div className="shortTerm">
-              <StyledInput 
+              <InputDefault 
                 type="date" 
                 onChange={this.handleChange}
+                placeholder={moment(this.state.newBDay).format("MM/DD/YYYY")}
               />
               <InputClicker 
                 ready={this.state.dateInput != this.state.newBDay ? "1" : "0"} 
@@ -151,7 +154,7 @@ class App extends React.Component {
             <DNone>
                 <LifeLabel /> <LifeCount /><HeroText /> 
                 <CardGrid /> <Card /> 
-                <StyledInput /> <InputClicker />
+                <StyledInput /> <InputClicker /> <InputDefault type="date" placeholder={this.state.newBDay}/>
                 <DisplayOptions active={true} /> <DisplayOptions active={false} />
                 <ErrorPop popper={"1"} message="Please Insert Your Birthday"/>
                 <InputClicker ready={"1"} initialPage={true} /> <InputClicker ready={"0"} initialPage={false}/> <InputClicker ready={"1"} initialPage={false}/> <Fading fading={0}/> <Fading fading={1}/>
@@ -359,20 +362,23 @@ const InputClicker = props => {
 }
 
 const InputDefault = styled(StyledInput)`
-  :after {
-    content: ${props => props.afterContent}
+  position: relative;
+  color: rgba(0, 0, 0, .0);  
+
+  ::after {
+    content: attr(placeholder);
+    color: white;
+    position: absolute;
   }
 
-  :focus:after {
+  :focus::after {
     content: "";
   }
 
+  :focus {
+    color: rgba(255, 255, 255, .8);
+  }
 `
-
-
-const MainInput = ({ afterContent }) => {
-  return <InputDefault afterContent={afterContent} />
-}
 
 
 export default App;
