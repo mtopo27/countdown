@@ -53,7 +53,7 @@ class App extends React.Component {
       } else if (this.state.dataDisplay === "Days Elapsed") {
         return second
       } else {
-        return `${Math.floor(third)}%`
+        return `${Math.round(third)}%`
       }
     } 
 
@@ -367,7 +367,7 @@ const InputDefault = styled(StyledInput)`
 
   ::after {
     content: attr(placeholder);
-    color: white;
+    color: rgba(255, 255, 255, .8);
     position: absolute;
   }
 
@@ -377,6 +377,10 @@ const InputDefault = styled(StyledInput)`
 
   :focus {
     color: rgba(255, 255, 255, .8);
+  }
+
+  @media max-width(600px) {
+    width: 100%;
   }
 `
 

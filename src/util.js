@@ -66,9 +66,4 @@ export const decData = function(userAge, userBday) {
   return [currDec, nextDec, daysToDec, daysFromDec, percentDec]
 }
 
-export const tryData = function(me) {
-  const tryThis = me;
-  const tryThat = me + me;
-  return { tryThis, tryThat }
-}
 
