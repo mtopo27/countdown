@@ -9,7 +9,7 @@ import './card.css'
  *  title: string
  * }} props 
  */
-const Card = props => (
+const Card = (props) => (
   <CardContainer>
     <CardTitle>{props.title}</CardTitle>
     <CardImg src={props.image} />
@@ -17,23 +17,21 @@ const Card = props => (
       <CardData>{props.data}</CardData>
       <DataLabel>{props.label}</DataLabel>
     </div>
-    <BarGraph width={props.width}>
-      <div />
+    <BarGraph>
+      <div style={{width: props.fill + '%'}} />
     </BarGraph>
   </CardContainer>
 )
 
 const CardContainer = styled.div`
   padding: 16px 20px;
-  background-color: #12121a
+  background-color: #0C0C12;
   border-radius: 24px;
-  width: 250px;
-  box-shadow: 0px 3px 10px 0 rgba(0, 0, 0, .1);
+  width: 225px;
+  box-shadow: 0px 3px 12px 0 rgba(0, 0, 0, .2);
   display: grid;
   grid-template-rows: repeat(4, auto);
   grid-gap: 24px;
-  // position: absolute;
-  // animation: CardDeal 2.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 `
 
 const CardTitle = styled.span`
@@ -50,7 +48,7 @@ const CardImg = styled.img`
 const CardData = styled.span`
   font-weight: bold;
   font-size: 2rem;
-  color: white
+  color: white;
   margin-bottom: 2px;
 `
 
@@ -70,14 +68,25 @@ const BarGraph = styled.div`
 
   div {
     position: absolute;
-    background-color: #0578F2;
-    width: ${(props) => props.width}%;
+    background-color: #025FEB;
     height: 8px;
+    transition: all .3s ease;
     border-radius: 20px;
-    animation: Grow 3s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation: Grow 2s 0.5s forwards ease;
   }
 `
 
+const BarFill = styled.div`
+  position: absolute;
+  background-color: #0578F2;
+  width: ${props => props.barWidth || "0"}%;
+  height: 8px;
+  border-radius: 20px;
+  animation: Grow 3s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+`
+const Filler = ({ fillWidth }) => {
+  return <BarFill barWidth={fillWidth} />
+}
 
 
 export default Card

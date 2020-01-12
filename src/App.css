@@ -14,38 +14,76 @@ body {
 }
 
 .appContent{
-  background-color: #222834;
-  /* height: 100vh!important; */
-  /* max-height: 100vh!important; */
+  background-color: #151B26;
+  justify-content: center;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
   color: white;
   overflow: none;
   text-align: center;
 }
 
+.underCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 50px;
+  padding-right: 50px;
+  opacity: 0;
+  animation: Rise 1.5s .4s forwards ease;
+}
+
+.labels {
+  display: grid;
+  grid-gap: 40px;
+  transition: all .3s ease;
+  font-size: 1.33rem;
+  grid-template-columns: repeat(3, 165px);
+  position: relative;
+  max-width: 100%;
+  overflow: scroll;
+}
+
+.shortTerm {
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: min-content;
+
+}
+
 
 @keyframes Rise {
   0% {
-    opacity: 0;
-    transform: TranslateY(60px);
+    opacity: 0!important;
+    visibility: hidden;
   }
 
   100% {
     opacity: 1;
-    transform: TranslateY(0px)
+    visibility: visible ;
   }
 }
 
-@keyframes CardDeal {
+@keyframes FadeOut {
   0% {
-    position: absolute;
+    opacity: 1;
   }
 
   100% {
-    position: relative;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .underCard {
+    flex-direction: column-reverse;
+  }
+
+  .labels {
+    margin-bottom: 24px;
+    padding: 12px 0px;
   }
 }
 
@@ -53,4 +91,12 @@ body {
   .App-header {
     padding-bottom: 50px;
   }
+
+}
+
+@media (max-width: 600px) {
+  .labels {
+    grid-gap: 20px;
+  }
+
 }

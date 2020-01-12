@@ -3,7 +3,6 @@ import TenK from './images/10k.svg'
 import TwentyK from './images/20k.svg'
 import Two5K from './images/25k.svg'
 import FortyK from './images/40k.svg'
-import * as app from './App'
 
 export const now = moment()
 
@@ -11,24 +10,29 @@ function percenting(a, b) {
   return 100 - ((a/b) * 100)
 }
 
+<<<<<<< HEAD
 
 // Get the age, date of last and next birthday, days to next birthday, and % of year age finished
 
+=======
+// 
+>>>>>>> 50a3fece22d38114923b4698011c325a25216aa0
 export const bDayData = function(userBorn, userBday) {
   var currAge = Math.floor(moment().diff(userBorn, 'years', true));
   var prevBday = moment(userBday).add(currAge, 'years', true);
   var nextBday = moment(userBday).add(currAge + 1, 'years', true);
   var daysToBday = nextBday.diff(moment(), 'days');
+  var daysFromBday = moment().diff(prevBday, 'days')
   var totalBday = nextBday.diff(prevBday, 'days');
-  var percentBday = percenting(daysToBday, totalBday)
-  return [daysToBday, percentBday]
+  var percentBday = 100 - ((daysToBday/totalBday) * 100)
+  return [daysToBday, daysFromBday, percentBday]
 }
-const [currAge, prevBday] = bDayData(moment("1995-06-24"), "1995-06-24")
 
 // Get jan 1 date of respective years, days from 'now' to next year, and the percent of the year finished
 export const thisYear = moment().startOf('year')
 export const nextYear = moment().startOf('year').add(1, 'years')
 export const daysToYear = nextYear.diff(now, 'days')
+export const daysFromYear = now.diff(thisYear, 'days')
 export const totalYear = nextYear.diff(thisYear, 'days')
 export const percentYear = percenting(daysToYear, totalYear)
 
@@ -39,7 +43,7 @@ export const daysOldData = function(userBday) {
   (daysOld<10000) ? 10000 : 
     (daysOld>10000 && daysOld<20000 ? 20000 : 
       (daysOld>20000 && daysOld<25000 ? 25000 : 
-        (daysOld>25000 && daysOld<40000 ? 40000 : "wow, good job")
+        (daysOld>=25000 && daysOld<40000 ? 40000 : "wow, good job")
       )
   );
   var bigDayDate = moment(userBday).add(nextBigDay, 'days');
@@ -62,7 +66,10 @@ export const decData = function(userAge, userBday) {
   var currDecDate = moment(userBday).add(currDec, 'years');
   var nextDecDate = moment(userBday).add(nextDec, 'years');
   var daysToDec = nextDecDate.diff(moment(), 'days');
+  var daysFromDec = moment().diff(currDecDate, 'days');
   var totalDec = nextDecDate.diff(currDecDate, 'days');
   var percentDec = percenting(daysToDec, totalDec);
-  return [currDec, nextDec, daysToDec, percentDec]
+  return [currDec, nextDec, daysToDec, daysFromDec, percentDec]
 }
+
+
