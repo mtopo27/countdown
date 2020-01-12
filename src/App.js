@@ -6,15 +6,6 @@ import moment from 'moment'
 import * as util from './util'
 import Arrow from './images/arrow.svg'
 
-<<<<<<< HEAD
-  /*
-    Questions:
-    2. how do I ensure something follows a format '####-##-##'
-    3. Any idea why the styled components don't render after state change
-    ---
-    4. Animating between returns? 
-  */
-=======
 
   /*
     Questions:
@@ -23,7 +14,6 @@ import Arrow from './images/arrow.svg'
     4. Animating between returns? 
   */
 
->>>>>>> 50a3fece22d38114923b4698011c325a25216aa0
 
 class App extends React.Component {
   state = {
@@ -37,88 +27,11 @@ class App extends React.Component {
     this.setState({dateInput: event.target.value});
   }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 50a3fece22d38114923b4698011c325a25216aa0
   handleClick = (event) => {
     setTimeout(() => this.setState({hasDate: true}),400);
     this.setState({newBDay: this.state.dateInput})
   }
 
-<<<<<<< HEAD
-  render() {
-    // Constants from states, logic functions held in util
-    const userBday = this.state.dateInput
-    const userBorn = moment(userBday)
-    const userAges = Math.floor(util.now.diff(userBorn, 'years', true))
-    const userDaysOld = util.now.diff(moment(userBday), 'days')
-    const [daysToBday, percentBday] = util.bDayData(userBorn, userBday)
-    const [nextBigDay, decImage, daysToBigDay, percentDays] = util.daysOldData(userBday)
-    const [currDec, nextDec, daysToDec, percentDec] = util.decData(userAges, userBday)
-
-
-    let {pageStatus} = this.state.hasDate
-
-    const inputPage = (
-      <div className="appContent">
-      <TestInput>
-      <input 
-        type="date" 
-        onChange={this.handleChange} >
-      </input>
-      <button onClick={this.handleClick}>Store Date</button>
-      </TestInput>
-      </div>
-    )
-
-    const mainPage = (
-      <div className="appContent">
-      <HeroText>
-        <LifeCount>{userDaysOld}</LifeCount>
-        <LifeLabel>Days Old</LifeLabel>
-      </HeroText>
-
-      <CardGrid>
-        <Card
-          title={`${userAges + 1}th Birthday`}
-          image={require('./images/birthday.svg')}
-          data={daysToBday}
-          label="Days Remaining"
-          width={percentBday} />
-
-        <Card
-          title={`${moment().add(1, 'years').format("YYYY")} New Year`}
-          image={require('./images/newYear.svg')}
-          data={util.daysToYear}
-          label="Days Remaining"
-          width={util.percentYear} />
-
-        <Card
-          title={`${nextBigDay/1000}k Days`}
-          image={decImage}
-          data={daysToBigDay}
-          label="Days Remaining"
-          width={percentDays} />
-
-        <Card
-          title={`${currDec}'s to ${nextDec}`}
-          image={require('./images/death.svg')}
-          data={daysToDec}
-          label="Days Remaining"
-          width={percentDec} />
-      </CardGrid>
-    </div>
-    )
-
-
-      return (
-         <div> {this.state.hasDate ? inputPage : mainPage} </div>
-      )
-    }
-
-    }
-=======
   handleDisplay = (value) => {
     this.setState({dataDisplay: value})
   }
@@ -283,7 +196,6 @@ const TestInput = styled.div`
     margin: auto;
   }
 `
->>>>>>> 50a3fece22d38114923b4698011c325a25216aa0
 
 const StyledInput = styled.input`
   background-color: rgba(0, 0, 0, 0);

@@ -10,13 +10,6 @@ function percenting(a, b) {
   return 100 - ((a/b) * 100)
 }
 
-<<<<<<< HEAD
-
-// Get the age, date of last and next birthday, days to next birthday, and % of year age finished
-
-=======
-// 
->>>>>>> 50a3fece22d38114923b4698011c325a25216aa0
 export const bDayData = function(userBorn, userBday) {
   var currAge = Math.floor(moment().diff(userBorn, 'years', true));
   var prevBday = moment(userBday).add(currAge, 'years', true);
