@@ -146,6 +146,7 @@ class App extends React.Component {
                   type="date" 
                   onChange={this.handleChange}
                   initialPage
+                  placeholder="MM-DD-YYYY"
                   >
               </StyledInput>
              <InputClicker 
