@@ -65,6 +65,8 @@ class App extends React.Component {
       ReactGA.pageview('/homepage');
   }
 
+  console.log(percentDays)
+
     if (this.state.hasDate || this.state.newBDay != '') {
       return(
         <AppContent>
@@ -90,7 +92,7 @@ class App extends React.Component {
               image={decImage}
               data={displayControl(daysToBigDay, userDaysOld, percentDays)}
               label={this.state.dataDisplay}
-              fill={`${this.state.hasDate ? percentDays : "0"}`} />
+              fill={percentDays} />
 
 
             <Card
