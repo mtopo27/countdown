@@ -5,6 +5,8 @@ import Card from './components/card';
 import moment from 'moment'
 import * as util from './util'
 import Arrow from './images/arrow.svg'
+import ReactGA from 'react-ga';
+import ls from 'local-storage'
 
 
   /*
@@ -15,11 +17,13 @@ import Arrow from './images/arrow.svg'
   */
 
 
+
+
 class App extends React.Component {
   state = {
     dateInput: '',
     hasDate: false,
-    newBDay: '',
+    newBDay: localStorage.getItem('birthday') ? localStorage.getItem('birthday') : '',
     dataDisplay: "Days Remaining"
   }
 
@@ -29,14 +33,13 @@ class App extends React.Component {
 
   handleClick = (event) => {
     setTimeout(() => this.setState({hasDate: true}),400);
-    this.setState({newBDay: this.state.dateInput})
+    localStorage.setItem('birthday', this.state.dateInput);
+    this.setState({newBDay: this.state.dateInput});
   }
 
   handleDisplay = (value) => {
     this.setState({dataDisplay: value})
   }
-
-  
 
   render() {
     // Constants from states, logic functions held in util
@@ -57,9 +60,12 @@ class App extends React.Component {
       }
     } 
 
-    console.log(moment("1995-06-24").format("MM/DD/YYYY"))
+    function initializeReactGA() {
+      ReactGA.initialize('UA-156112883-1');
+      ReactGA.pageview('/homepage');
+  }
 
-    if (this.state.hasDate && this.state.newBDay != '') {
+    if (this.state.hasDate || this.state.newBDay != '') {
       return(
         <AppContent>
           <TopMain daysOld={userDaysOld} />
