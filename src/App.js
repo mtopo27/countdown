@@ -210,7 +210,7 @@ const StyledInput = styled.input`
   position: relative;
   display: flex;
   justify-content: center;
-  min-width: 275px;
+  min-width: 200px;
 
   :focus {
     outline: none;
