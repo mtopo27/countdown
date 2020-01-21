@@ -238,6 +238,10 @@ const StyledInput = styled.input`
   display: none;
 }
 
+@media max-width(600px) {
+  width: 100%;
+}
+
 }
 `
 
@@ -379,7 +383,7 @@ const InputDefault = styled(StyledInput)`
     color: rgba(255, 255, 255, .8);
   }
 
-  @media max-width(600px) {
+  @media (max-width: 600px) {
     width: 100%;
   }
 `
