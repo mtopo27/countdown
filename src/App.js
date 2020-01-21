@@ -8,16 +8,12 @@ import Arrow from './images/arrow.svg'
 import ReactGA from 'react-ga';
 import ls from 'local-storage'
 
-
   /*
     Questions:
     1. how do I ensure something follows a format '####-##-##'
     ---
     4. Animating between returns? 
-  */
-
-
-
+  */  
 
 class App extends React.Component {
   state = {
@@ -41,6 +37,7 @@ class App extends React.Component {
     this.setState({dataDisplay: value})
   }
 
+
   render() {
     // Constants from states, logic functions held in util
     var userBday = this.state.newBDay
@@ -59,13 +56,6 @@ class App extends React.Component {
         return `${Math.round(third)}%`
       }
     } 
-
-    function initializeReactGA() {
-      ReactGA.initialize('UA-156112883-1');
-      ReactGA.pageview('/homepage');
-  }
-
-  console.log(percentDays)
 
     if (this.state.hasDate || this.state.newBDay != '') {
       return(
@@ -220,6 +210,7 @@ const StyledInput = styled.input`
   position: relative;
   display: flex;
   justify-content: center;
+  min-width: 275px;
 
   :focus {
     outline: none;
